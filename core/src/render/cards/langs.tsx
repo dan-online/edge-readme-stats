@@ -45,7 +45,7 @@ export function TopLangsCard({
 	locale = "en",
 	animate = true,
 }: TopLangsCardOptions) {
-	const i18n = t(locale as Locale).topLangs;
+	const i18n = t(locale).topLangs;
 	const displayLangs = languages.slice(0, langsCount);
 
 	if (layout === "compact") {

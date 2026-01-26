@@ -1,3 +1,5 @@
+import type { Locale } from "../lib/i18n";
+
 export interface Theme {
 	bg: string;
 	title: string;
@@ -44,7 +46,7 @@ export interface TopLangsCardOptions {
 	hideBorder: boolean;
 	layout: "default" | "compact" | "donut";
 	langsCount: number;
-	locale?: string;
+	locale?: Locale;
 	animate?: boolean;
 }
 

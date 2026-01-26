@@ -2,11 +2,11 @@
 	"$schema": "../../node_modules/wrangler/config-schema.json",
 	"name": "edge-readme-stats",
 	"compatibility_date": "2026-01-26",
-	"main": "src/index.ts",
-	"kv_namespaces": [
-		{
-			"binding": "CACHE",
-			"id": "cae87097cbe841dfa6cfc43ef6bb6ceb"
-		}
-	]
+	"main": "src/index.ts"
+	// "kv_namespaces": [
+	// 	{
+	// 		"binding": "CACHE",
+	// 		"id": "cae87097cbe841dfa6cfc43ef6bb6ceb"
+	// 	}
+	// ]
 }
