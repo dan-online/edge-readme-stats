@@ -1,0 +1,133 @@
+import { Hono } from "hono";
+import { describeRoute, validator } from "hono-openapi";
+import * as v from "valibot";
+import { fetchTopLanguages } from "../fetchers/langs.ts";
+import type { CacheProvider } from "../lib/cache.ts";
+import type { AppConfig } from "../lib/config.ts";
+import type { GitHubClient } from "../lib/github.ts";
+import { GitHubError } from "../lib/github.ts";
+import { resolveLocale, t } from "../lib/i18n.ts";
+import { resolveTheme } from "../lib/themes.ts";
+import { TopLangsCard } from "../render/cards/langs.tsx";
+import { Card } from "../render/components/card.tsx";
+import type { LanguageStats } from "../types/index.ts";
+import { BaseQuerySchema } from "./schemas.ts";
+
+const TopLangsQuerySchema = v.object({
+	...BaseQuerySchema.entries,
+	langs_count: v.optional(v.string()),
+	layout: v.optional(v.picklist(["default", "compact", "donut"])),
+});
+
+export function createTopLangsRoute(
+	client: GitHubClient,
+	config: AppConfig,
+	cache: CacheProvider<LanguageStats[]> | null,
+) {
+	const app = new Hono();
+
+	app.get(
+		"/",
+		describeRoute({
+			description: "Generate top languages card SVG",
+			responses: {
+				200: { description: "SVG languages card" },
+				403: { description: "Username not allowed" },
+				404: { description: "User not found" },
+				429: { description: "Rate limited" },
+			},
+		}),
+		validator("query", TopLangsQuerySchema),
+		async (c) => {
+			const query = c.req.valid("query");
+			const username = query.username;
+			const locale = resolveLocale(query.lang, c.req.header("Accept-Language"));
+			const i18n = t(locale);
+
+			if (!config.isUsernameAllowed(username)) {
+				const errorTheme = resolveTheme("default", {});
+				const errorSvg = (
+					<Card title="Error" theme={errorTheme} width={350} height={100}>
+						<text
+							x="0"
+							y="20"
+							font-family="'Segoe UI', Ubuntu, Sans-Serif"
+							font-size="14"
+							fill={errorTheme.text}
+						>
+							{i18n.errors.usernameNotAllowed}
+						</text>
+					</Card>
+				);
+				return c.body(errorSvg.toString(), 403, {
+					"Content-Type": "image/svg+xml",
+				});
+			}
+
+			try {
+				const hide = query.hide?.split(",").map((s) => s.trim()) ?? [];
+				const cacheKey = `${username.toLowerCase()}:${hide.sort().join(",")}`;
+				let languages = await cache?.get(cacheKey);
+
+				if (!languages) {
+					languages = await fetchTopLanguages(client, username, hide);
+					await cache?.set(cacheKey, languages);
+				}
+
+				const theme = resolveTheme(query.theme ?? "default", {
+					bg_color: query.bg_color,
+					title_color: query.title_color,
+					text_color: query.text_color,
+					icon_color: query.icon_color,
+					border_color: query.border_color,
+				});
+
+				const langsCount = Math.min(Number(query.langs_count) || 5, 10);
+
+				const svg = (
+					<TopLangsCard
+						username={username}
+						languages={languages}
+						theme={theme}
+						hideBorder={query.hide_border === "true"}
+						layout={query.layout ?? "default"}
+						langsCount={langsCount}
+						locale={locale}
+						animate={query.disable_animations !== "true"}
+					/>
+				);
+
+				return c.body(svg.toString(), 200, {
+					"Content-Type": "image/svg+xml",
+					"Cache-Control": `public, max-age=${config.variables.cache.ttl}`,
+				});
+			} catch (error) {
+				if (error instanceof GitHubError) {
+					const isNotFound = error.errors.some((e) => e.type === "NOT_FOUND");
+					const errorTheme = resolveTheme("default", {});
+					const errorSvg = (
+						<Card title="Error" theme={errorTheme} width={350} height={100}>
+							<text
+								x="0"
+								y="20"
+								font-family="'Segoe UI', Ubuntu, Sans-Serif"
+								font-size="14"
+								fill={errorTheme.text}
+							>
+								{isNotFound
+									? i18n.errors.userNotFound
+									: i18n.errors.serverError}
+							</text>
+						</Card>
+					);
+					return c.body(errorSvg.toString(), isNotFound ? 404 : 500, {
+						"Content-Type": "image/svg+xml",
+					});
+				}
+				throw error;
+			}
+		},
+	);
+
+	return app;
+}

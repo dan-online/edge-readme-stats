@@ -1,0 +1,25 @@
+{
+	"name": "edge-readme-stats",
+	"private": true,
+	"workspaces": [
+		"core",
+		"entries/node",
+		"entries/worker",
+		"entries/vercel",
+		"entries/bun"
+	],
+	"scripts": {
+		"dev": "yarn workspace @edge-readme-stats/node dev",
+		"build": "yarn workspaces foreach -A run build",
+		"core": "yarn workspace @edge-readme-stats/core",
+		"core:test": "yarn core test:run",
+		"lint": "biome check",
+		"lint:fix": "biome check --fix",
+		"typecheck": "tsc --noEmit"
+	},
+	"devDependencies": {
+		"@biomejs/biome": "^2.3.12",
+		"typescript": "^5.9.3"
+	},
+	"packageManager": "yarn@4.12.0"
+}

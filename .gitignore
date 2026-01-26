@@ -1,0 +1,21 @@
+node_modules/
+dist/
+.env
+.env.local
+*.log
+.DS_Store
+.vite/
+coverage/
+docs/
+*mcp*
+
+# Yarn files
+.yarn/install-state.gz
+.yarn/build-state.yml
+
+# direnv
+.envrc
+
+# Yarn files
+.yarn/install-state.gz
+.yarn/build-state.yml

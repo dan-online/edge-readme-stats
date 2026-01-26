@@ -1,0 +1,12 @@
+{
+	"name": "@edge-readme-stats/vercel",
+	"type": "module",
+	"dependencies": {
+		"@edge-readme-stats/core": "workspace:^"
+	},
+	"devDependencies": {
+		"@types/node": "^25.0.10",
+		"typescript": "^5.9.3",
+		"vercel": "^50.5.0"
+	}
+}

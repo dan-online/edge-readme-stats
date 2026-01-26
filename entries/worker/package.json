@@ -1,0 +1,15 @@
+{
+	"name": "@edge-readme-stats/worker",
+	"version": "0.1.0",
+	"type": "module",
+	"scripts": {
+		"dev": "wrangler dev",
+		"deploy": "wrangler deploy"
+	},
+	"dependencies": {
+		"@edge-readme-stats/core": "workspace:^"
+	},
+	"devDependencies": {
+		"wrangler": "^4.60.0"
+	}
+}
