@@ -15,7 +15,6 @@
           default = pkgs.mkShell {
             buildInputs = with pkgs; [
               nodejs-slim_24
-              corepack
               bun
               deno
               wrk

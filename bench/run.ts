@@ -79,21 +79,6 @@ async function main() {
 
 	const results: BenchResult[] = [];
 
-	for (const runtime of RUNTIMES) {
-		console.log(`Testing ${runtime}...`);
-
-		try {
-			const stop = await startServer(runtime);
-			const result = runWrk();
-			result.runtime = runtime;
-			results.push(result);
-			stop();
-			await new Promise((resolve) => setTimeout(resolve, 1000));
-		} catch (error) {
-			console.error(`Failed to benchmark ${runtime}:`, error);
-		}
-	}
-
 	console.log("\n📊 Results:\n");
 	console.log(
 		"| Runtime | Req/sec    | Latency (avg) | Latency (p99) | Errors |",
@@ -102,10 +87,20 @@ async function main() {
 		"|---------|------------|---------------|---------------|--------|",
 	);
 
-	for (const r of results) {
-		console.log(
-			`| ${r.runtime.padEnd(7)} | ${r.requestsPerSec.toFixed(2).padEnd(10)} | ${r.latencyAvg.padEnd(13)} | ${r.latencyP99.padEnd(13)} | ${r.errors.toString().padEnd(6)} |`,
-		);
+	for (const runtime of RUNTIMES) {
+		try {
+			const stop = await startServer(runtime);
+			const result = runWrk();
+			result.runtime = runtime;
+			results.push(result);
+			console.log(
+				`| ${result.runtime.padEnd(7)} | ${result.requestsPerSec.toFixed(2).padEnd(10)} | ${result.latencyAvg.padEnd(13)} | ${result.latencyP99.padEnd(13)} | ${result.errors.toString().padEnd(6)} |`,
+			);
+			stop();
+			await new Promise((resolve) => setTimeout(resolve, 1000));
+		} catch (error) {
+			console.error(`Failed to benchmark ${runtime}:`, error);
+		}
 	}
 
 	const winner = results.reduce((a, b) =>

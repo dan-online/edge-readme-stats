@@ -2456,6 +2456,7 @@ __metadata:
   resolution: "edge-readme-stats@workspace:."
   dependencies:
     "@biomejs/biome": "npm:^2.3.12"
+    tsx: "npm:^4.21.0"
     typescript: "npm:^5.9.3"
   languageName: unknown
   linkType: soft
