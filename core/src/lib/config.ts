@@ -1,4 +1,4 @@
-import { type CacheProvider, getCache } from "./cache";
+import { type CacheProvider, getCache } from "./cache.ts";
 
 export type AppConfigVariables = Partial<AppConfig["variables"]>;
 
