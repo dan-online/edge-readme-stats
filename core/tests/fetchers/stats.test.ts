@@ -39,6 +39,10 @@ describe("stats fetcher", () => {
 						login: "testuser",
 						repositories: {
 							totalCount: 10,
+							pageInfo: {
+								hasNextPage: false,
+								endCursor: null,
+							},
 							nodes: [{ stargazerCount: 100 }, { stargazerCount: 50 }],
 						},
 						pullRequests: { totalCount: 25 },

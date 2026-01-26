@@ -1,12 +1,16 @@
-import type { GitHubClient } from "../lib/github.ts";
+import { type GitHubClient, gql } from "../lib/github.ts";
 import type { UserStats } from "../types/index.ts";
 
-const STATS_QUERY = `
-query userStats($username: String!) {
+const STATS_QUERY = gql`
+query userStats($username: String!, $after: String) {
   user(login: $username) {
     login
-    repositories(first: 100, ownerAffiliations: OWNER, orderBy: {field: STARGAZERS, direction: DESC}) {
+    repositories(first: 100, after: $after, ownerAffiliations: OWNER, orderBy: {field: STARGAZERS, direction: DESC}) {
       totalCount
+      pageInfo {
+        hasNextPage
+        endCursor
+      }
       nodes {
         stargazerCount
       }
@@ -32,6 +36,10 @@ interface StatsResponse {
 		login: string;
 		repositories: {
 			totalCount: number;
+			pageInfo: {
+				hasNextPage: boolean;
+				endCursor: string | null;
+			};
 			nodes: Array<{ stargazerCount: number }>;
 		};
 		pullRequests: { totalCount: number };
@@ -72,6 +80,7 @@ export function calculateRank(stats: RankInput): {
 	if (score >= 500) return { level: "B+", percentile: 70 };
 	if (score >= 250) return { level: "B", percentile: 60 };
 	if (score >= 100) return { level: "C+", percentile: 50 };
+
 	return { level: "C", percentile: 40 };
 }
 
@@ -79,13 +88,38 @@ export async function fetchUserStats(
 	client: GitHubClient,
 	username: string,
 ): Promise<UserStats> {
+	// First request
 	const data = await client.graphql<StatsResponse>(STATS_QUERY, { username });
 	const user = data.user;
 
-	const totalStars = user.repositories.nodes.reduce(
+	// Paginate through all repositories to get accurate star count
+	let totalStars = user.repositories.nodes.reduce(
 		(sum, repo) => sum + repo.stargazerCount,
 		0,
 	);
+
+	let { hasNextPage, endCursor } = user.repositories.pageInfo;
+	while (hasNextPage && endCursor) {
+		const pageData = await client.graphql<StatsResponse>(STATS_QUERY, {
+			username,
+			after: endCursor,
+		});
+		const repos = pageData.user.repositories;
+
+		console.log(repos.nodes.length);
+
+		totalStars += repos.nodes.reduce(
+			(sum, repo) => sum + repo.stargazerCount,
+			0,
+		);
+
+		if (repos.nodes.at(-1)?.stargazerCount === 0) {
+			break;
+		}
+
+		hasNextPage = repos.pageInfo.hasNextPage;
+		endCursor = repos.pageInfo.endCursor;
+	}
 
 	const totalCommits = user.contributionsCollection.totalCommitContributions;
 	const totalPRs = user.pullRequests.totalCount;

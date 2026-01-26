@@ -1,4 +1,3 @@
-import type { Locale } from "../../lib/i18n.ts";
 import { t } from "../../lib/i18n.ts";
 import type { LanguageStats, TopLangsCardOptions } from "../../types/index.ts";
 import { Card } from "../components/card.tsx";

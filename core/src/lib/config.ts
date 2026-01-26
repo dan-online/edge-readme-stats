@@ -9,7 +9,7 @@ export class AppConfig {
 		};
 
 		whitelist: {
-			usernames?: string[];
+			usernames: Set<string>;
 		};
 
 		cache: {
@@ -19,7 +19,9 @@ export class AppConfig {
 		};
 	} = {
 		github: {},
-		whitelist: {},
+		whitelist: {
+			usernames: new Set(),
+		},
 		cache: {
 			ttl: 3600, // 1 hour
 			maxSize: 1000,
@@ -50,10 +52,9 @@ export class AppConfig {
 		}
 
 		if (env.WHITELIST_USERNAMES) {
-			this.variables.whitelist = this.variables.whitelist || {};
-			this.variables.whitelist.usernames = env.WHITELIST_USERNAMES.split(
-				",",
-			).map((username) => username.trim().toLowerCase());
+			this.variables.whitelist.usernames = new Set(
+				env.WHITELIST_USERNAMES.split(",").map((u) => u.trim().toLowerCase()),
+			);
 		}
 
 		if (env.CACHE_TTL) {
@@ -80,14 +81,12 @@ export class AppConfig {
 		return this;
 	}
 
-	/** Check if a username is allowed */
+	/** Check if a username is allowed (O(1) with Set) */
 	isUsernameAllowed(username: string): boolean {
-		const allowedUsernames = this.variables.whitelist.usernames;
-
-		if (!allowedUsernames || allowedUsernames.length === 0) {
+		if (this.variables.whitelist.usernames.size === 0) {
 			return true;
 		}
 
-		return allowedUsernames.includes(username.toLowerCase());
+		return this.variables.whitelist.usernames.has(username.toLowerCase());
 	}
 }

@@ -1,7 +1,6 @@
 import { swaggerUI } from "@hono/swagger-ui";
 import { Hono } from "hono";
 import { openAPIRouteHandler } from "hono-openapi";
-import { clearAllCaches } from "./lib/cache.ts";
 import type { AppConfig } from "./lib/config.ts";
 import { createGitHubClient } from "./lib/github.ts";
 import { createTopLangsRoute } from "./routes/langs.tsx";
@@ -42,16 +41,12 @@ export function createApp(config: AppConfig) {
 						langsEntries: langsCache?.size ?? 0,
 					}
 				: { enabled: false },
-			whitelist: config.variables.whitelist.usernames
-				? { enabled: true, count: config.variables.whitelist.usernames.length }
-				: { enabled: false },
+			whitelist:
+				config.variables.whitelist.usernames.size > 0
+					? { enabled: true, count: config.variables.whitelist.usernames.size }
+					: { enabled: false },
 		}),
 	);
-
-	app.delete("/cache", (c) => {
-		clearAllCaches();
-		return c.json({ status: "cleared" });
-	});
 
 	app.route("/stats", createStatsRoute(client, config, statsCache));
 	app.route("/langs", createTopLangsRoute(client, config, langsCache));
