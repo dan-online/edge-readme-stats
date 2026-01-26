@@ -90,7 +90,7 @@ export function createTopLangsRoute(
 						languages={languages}
 						theme={theme}
 						hideBorder={query.hide_border === "true"}
-						layout={query.layout ?? "default"}
+						layout={query.layout ?? "compact"}
 						langsCount={langsCount}
 						locale={locale}
 						animate={query.disable_animations !== "true"}
