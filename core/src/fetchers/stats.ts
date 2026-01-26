@@ -88,46 +88,47 @@ export async function fetchUserStats(
 	client: GitHubClient,
 	username: string,
 ): Promise<UserStats> {
-	// First request
 	const data = await client.graphql<StatsResponse>(STATS_QUERY, { username });
-	const user = data.user;
 
-	// Paginate through all repositories to get accurate star count
-	let totalStars = user.repositories.nodes.reduce(
+	let totalStars = data.user.repositories.nodes.reduce(
 		(sum, repo) => sum + repo.stargazerCount,
 		0,
 	);
 
-	let { hasNextPage, endCursor } = user.repositories.pageInfo;
-	while (hasNextPage && endCursor) {
+	let { hasNextPage, endCursor } = data.user.repositories.pageInfo;
+	while (hasNextPage && endCursor && totalStars > 0) {
 		const pageData = await client.graphql<StatsResponse>(STATS_QUERY, {
 			username,
 			after: endCursor,
 		});
+
 		const repos = pageData.user.repositories;
 
-		console.log(repos.nodes.length);
+		let keepGoing = true;
 
-		totalStars += repos.nodes.reduce(
-			(sum, repo) => sum + repo.stargazerCount,
-			0,
-		);
+		for (const repo of repos.nodes) {
+			totalStars += repo.stargazerCount;
 
-		if (repos.nodes.at(-1)?.stargazerCount === 0) {
-			break;
+			if (repo.stargazerCount === 0) {
+				keepGoing = false;
+				break;
+			}
 		}
+
+		if (!keepGoing) break;
 
 		hasNextPage = repos.pageInfo.hasNextPage;
 		endCursor = repos.pageInfo.endCursor;
 	}
 
-	const totalCommits = user.contributionsCollection.totalCommitContributions;
-	const totalPRs = user.pullRequests.totalCount;
-	const totalIssues = user.issues.totalCount;
+	const totalCommits =
+		data.user.contributionsCollection.totalCommitContributions;
+	const totalPRs = data.user.pullRequests.totalCount;
+	const totalIssues = data.user.issues.totalCount;
 	const totalContributions =
-		user.contributionsCollection.totalPullRequestContributions +
-		user.contributionsCollection.totalIssueContributions +
-		user.contributionsCollection.restrictedContributionsCount;
+		data.user.contributionsCollection.totalPullRequestContributions +
+		data.user.contributionsCollection.totalIssueContributions +
+		data.user.contributionsCollection.restrictedContributionsCount;
 
 	const rank = calculateRank({
 		totalCommits,
@@ -138,7 +139,7 @@ export async function fetchUserStats(
 	});
 
 	return {
-		username: user.login,
+		username: data.user.login,
 		totalStars,
 		totalCommits,
 		totalPRs,
