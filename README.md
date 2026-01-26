@@ -14,16 +14,16 @@ Generate dynamic GitHub statistics cards that run anywhere - Cloudflare Workers,
 
 ## Examples
 
-![GitHub Stats](https://edge-readme-stats.workers.dev/stats?username=dan-online)
-![GitHub Stats](https://edge-readme-stats.workers.dev/top-langs?username=dan-online)
+![GitHub Stats](https://edge-readme-stats.dancodes.workers.dev/stats?username=dan-online)
+![GitHub Stats](https://edge-readme-stats.dancodes.workers.dev/langs?username=dan-online)
 
 ## Quick Start
 
 ### Use the Public Instance
 
 ```md
-![GitHub Stats](https://edge-readme-stats.workers.dev/stats?username=YOUR_USERNAME)
-![Top Languages](https://edge-readme-stats.workers.dev/top-langs?username=YOUR_USERNAME)
+![GitHub Stats](https://edge-readme-stats.dancodes.workers.dev/stats?username=YOUR_USERNAME)
+![Top Languages](https://edge-readme-stats.dancodes.workers.dev/top-langs?username=YOUR_USERNAME)
 ```
 
 ### Self-host with Docker
@@ -44,7 +44,7 @@ npx wrangler deploy
 ### Stats Card
 
 ```md
-![Stats](https://edge-readme-stats.workers.dev/stats?username=dan-online)
+![Stats](https://edge-readme-stats.dancodes.workers.dev/stats?username=dan-online)
 ```
 
 **Parameters:**
@@ -61,7 +61,7 @@ npx wrangler deploy
 ### Top Languages Card
 
 ```md
-![Languages](https://edge-readme-stats.workers.dev/top-langs?username=dan-online)
+![Languages](https://edge-readme-stats.dancodes.workers.dev/top-langs?username=dan-online)
 ```
 
 **Parameters:**
