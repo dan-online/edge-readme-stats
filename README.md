@@ -23,7 +23,7 @@ Generate dynamic GitHub statistics cards that run anywhere - Cloudflare Workers,
 
 ```md
 ![GitHub Stats](https://edge-readme-stats.dancodes.workers.dev/stats?username=YOUR_USERNAME)
-![Top Languages](https://edge-readme-stats.dancodes.workers.dev/top-langs?username=YOUR_USERNAME)
+![Top Languages](https://edge-readme-stats.dancodes.workers.dev/langs?username=YOUR_USERNAME)
 ```
 
 ### Self-host with Docker
@@ -61,7 +61,7 @@ npx wrangler deploy
 ### Top Languages Card
 
 ```md
-![Languages](https://edge-readme-stats.dancodes.workers.dev/top-langs?username=dan-online)
+![Languages](https://edge-readme-stats.dancodes.workers.dev/langs?username=dan-online)
 ```
 
 **Parameters:**
