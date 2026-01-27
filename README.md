@@ -6,20 +6,26 @@ Generate dynamic GitHub statistics cards that run anywhere - Cloudflare Workers,
 
 ## Features
 
-- 🚀 **Edge-first** - Sub-50ms response times globally
-- 🌍 **Run anywhere** - Node.js, Bun, Deno, Cloudflare Workers, Vercel
+- 🚀 **Edge-first** - Deploy close to requests for fast response times
+- 🌍 **Run anywhere** - Node.js, Bun, Deno, Cloudflare Workers, Vercel, Docker
 - 🎨 **10 themes** - Plus full custom color support
 - 📦 **Tiny footprint** - Minimal dependencies, fast cold starts
-- 🔒 **Self-host friendly** - Own your rate limits with Docker
+- 🔒 **Self-host friendly** - Use your own GitHub token for higher rate limits
 
 ## Examples
 
 ![GitHub Stats](https://edge-readme-stats.dancodes.workers.dev/stats?username=dan-online)
 ![GitHub Stats](https://edge-readme-stats.dancodes.workers.dev/langs?username=dan-online)
 
+> More coming soon...
+
 ## Quick Start
 
 ### Use the Public Instance
+
+**[Try the Card Generator](https://edge-readme-stats.dancodes.workers.dev/generator)** to build your card visually!
+
+Or use these URLs directly:
 
 ```md
 ![GitHub Stats](https://edge-readme-stats.dancodes.workers.dev/stats?username=YOUR_USERNAME)
@@ -52,11 +58,13 @@ npx wrangler deploy
 | Parameter | Default | Description |
 |-----------|---------|-------------|
 | `username` | required | GitHub username |
-| `theme` | `default` | Theme name |
+| `theme` | `github` | Theme name (see [Themes](#themes)) |
+| `lang` | auto | Language code (see [Internationalization](#internationalization)) |
 | `hide` | - | Hide stats: `stars,commits,prs,issues,contribs` |
 | `show_icons` | `true` | Show icons |
 | `hide_rank` | `false` | Hide rank circle |
 | `hide_border` | `false` | Hide card border |
+| `disable_animations` | `false` | Disable CSS animations |
 
 ### Top Languages Card
 
@@ -69,14 +77,31 @@ npx wrangler deploy
 | Parameter | Default | Description |
 |-----------|---------|-------------|
 | `username` | required | GitHub username |
-| `theme` | `default` | Theme name |
+| `theme` | `github` | Theme name (see [Themes](#themes)) |
+| `lang` | auto | Language code (see [Internationalization](#internationalization)) |
 | `hide` | - | Hide languages (comma-separated) |
 | `langs_count` | `5` | Number of languages (max 10) |
-| `layout` | `default` | Layout: `default`, `compact`, `donut` |
+| `layout` | `compact` | Layout: `compact`, `donut` |
+| `hide_border` | `false` | Hide card border |
+| `disable_animations` | `false` | Disable CSS animations |
+
+## Card Generator
+
+The interactive **[Card Generator](https://edge-readme-stats.dancodes.workers.dev/generator)** lets you build and customize your cards visually:
+
+- **Live Preview** - See your card update in real-time as you adjust settings
+- **Card Type Tabs** - Switch between Stats and Languages cards
+- **Theme Selection** - Browse all 10 built-in themes
+- **Custom Colors** - Pick colors with color pickers or enter hex values
+- **Language Selection** - Preview cards in different languages
+- **One-Click Copy** - Copy markdown or URL directly to clipboard
+- **Submit Custom Themes** - Create a GitHub issue with your custom theme colors
+
+The generator creates a preview using sample data so you can see how your card will look before adding your username.
 
 ## Themes
 
-Available themes: `default`, `dark`, `radical`, `tokyonight`, `dracula`, `gruvbox`, `nord`, `catppuccin`, `onedark`, `github`
+Available themes: `github` (default), `dark`, `radical`, `tokyonight`, `dracula`, `gruvbox`, `nord`, `catppuccin`, `onedark`, `monokai`
 
 ### Custom Colors
 
@@ -94,6 +119,25 @@ Override any theme with custom colors:
 | `icon_color` | Icon color |
 | `border_color` | Border color |
 
+## Internationalization
+
+Cards support multiple languages via the `lang` parameter:
+
+```
+?lang=zh
+```
+
+| Code | Language | Status |
+|------|----------|--------|
+| `en` | English | Native |
+| `zh` | Chinese | Machine translated |
+| `es` | Spanish | Machine translated |
+| `pt` | Portuguese | Machine translated |
+
+The language is also auto-detected from your browser's `Accept-Language` header.
+
+**Want to contribute translations?** We'd love help improving machine-translated locales or adding new languages. Edit [`core/src/lib/i18n.ts`](core/src/lib/i18n.ts) and submit a PR!
+
 ## Self-Hosting
 
 ### Environment Variables
@@ -107,15 +151,15 @@ Override any theme with custom colors:
 
 ```bash
 docker run -p 3000:3000 \
-  -e GITHUB_TOKEN=ghp_your_token \
+  -e GITHUB_TOKEN=ghp_your_token \ # (optional)
   ghcr.io/dan-online/edge-readme-stats
 ```
 
 ### Cloudflare Workers
 
 1. Clone the repo
-2. Set secrets: `wrangler secret put GITHUB_TOKEN`
-3. Deploy: `cd entries/worker && wrangler deploy`
+2. Set secrets: `yarn wrangler secret put GITHUB_TOKEN` (optional) 
+3. Deploy: `yarn wrangler deploy`
 
 ### Vercel
 
@@ -131,7 +175,7 @@ yarn install
 yarn dev
 
 # Run tests
-yarn test
+yarn core:test
 
 # Lint
 yarn lint
@@ -139,7 +183,7 @@ yarn lint
 
 ## API Documentation
 
-OpenAPI spec available at `/openapi`
+OpenAPI spec available at `/openapi`, Swagger UI at `/docs` when running the server.
 
 ## Attribution
 

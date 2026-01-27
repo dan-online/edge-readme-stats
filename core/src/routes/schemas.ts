@@ -1,5 +1,6 @@
 import * as v from "valibot";
 import { themeNames } from "../lib/themes.ts";
+import { coerceBoolean } from "../types/index.ts";
 
 /**
  * Base query schema with common fields shared across all card routes
@@ -7,10 +8,16 @@ import { themeNames } from "../lib/themes.ts";
 export const BaseQuerySchema = v.object({
 	username: v.string(),
 	lang: v.optional(v.string()),
-	theme: v.optional(v.picklist(themeNames)),
-	hide: v.optional(v.string()),
-	hide_border: v.optional(v.string()),
-	disable_animations: v.optional(v.string()),
+	theme: v.fallback(v.picklist(themeNames), themeNames[0]),
+	hide: v.fallback(
+		v.pipe(
+			v.string(),
+			v.transform((s) => s.split(",").map((s) => s.trim())),
+		),
+		[],
+	),
+	hide_border: coerceBoolean,
+	disable_animations: coerceBoolean,
 	bg_color: v.optional(v.string()),
 	title_color: v.optional(v.string()),
 	text_color: v.optional(v.string()),

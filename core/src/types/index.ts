@@ -1,4 +1,13 @@
 import type { Locale } from "../lib/i18n";
+import * as v from "valibot";
+
+export const coerceBoolean = v.fallback(
+	v.pipe(
+		v.string(),
+		v.transform((s) => s === "true"),
+	),
+	false,
+);
 
 export interface Theme {
 	bg: string;
@@ -44,7 +53,7 @@ export interface TopLangsCardOptions {
 	languages: LanguageStats[];
 	theme: Theme;
 	hideBorder: boolean;
-	layout: "default" | "compact" | "donut";
+	layout: "compact" | "donut";
 	langsCount: number;
 	locale?: Locale;
 	animate?: boolean;

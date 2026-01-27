@@ -1,7 +1,7 @@
 import type { Theme } from "../types/index.ts";
 
 export const themeNames = [
-	"default",
+	"github",
 	"dark",
 	"radical",
 	"tokyonight",
@@ -10,19 +10,12 @@ export const themeNames = [
 	"nord",
 	"catppuccin",
 	"onedark",
-	"github",
+	"monokai",
 ] as const;
 
 export type ThemeName = (typeof themeNames)[number];
 
 export const themes: Record<ThemeName, Theme> = {
-	default: {
-		bg: "#ffffff",
-		title: "#2f80ed",
-		text: "#333333",
-		icon: "#4c71f2",
-		border: "#e4e2e2",
-	},
 	dark: {
 		bg: "#0d1117",
 		title: "#58a6ff",
@@ -86,10 +79,17 @@ export const themes: Record<ThemeName, Theme> = {
 		icon: "#0969da",
 		border: "#d0d7de",
 	},
+	monokai: {
+		bg: "#272822",
+		title: "#f92672",
+		text: "#f8f8f2",
+		icon: "#a6e22e",
+		border: "#49483e",
+	},
 };
 
-export function getTheme(name: ThemeName | string): Theme {
-	return name in themes ? themes[name as ThemeName] : themes.default;
+export function getTheme(name: ThemeName): Theme {
+	return themes[name];
 }
 
 function normalizeHex(hex: string): string {
@@ -109,16 +109,16 @@ export interface CustomColors {
 }
 
 export function resolveTheme(
-	themeName: ThemeName | string,
-	custom: CustomColors,
+	themeName?: ThemeName,
+	custom?: CustomColors,
 ): Theme {
-	const base = getTheme(themeName);
+	const base = getTheme(themeName || themeNames[0]);
 	return {
-		bg: custom.bg_color ? normalizeHex(custom.bg_color) : base.bg,
-		title: custom.title_color ? normalizeHex(custom.title_color) : base.title,
-		text: custom.text_color ? normalizeHex(custom.text_color) : base.text,
-		icon: custom.icon_color ? normalizeHex(custom.icon_color) : base.icon,
-		border: custom.border_color
+		bg: custom?.bg_color ? normalizeHex(custom.bg_color) : base.bg,
+		title: custom?.title_color ? normalizeHex(custom.title_color) : base.title,
+		text: custom?.text_color ? normalizeHex(custom.text_color) : base.text,
+		icon: custom?.icon_color ? normalizeHex(custom.icon_color) : base.icon,
+		border: custom?.border_color
 			? normalizeHex(custom.border_color)
 			: base.border,
 	};

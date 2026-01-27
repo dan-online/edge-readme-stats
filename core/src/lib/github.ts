@@ -21,15 +21,11 @@ export function createGitHubClient(token?: string) {
 			backoffLimit: 3000,
 		},
 		timeout: 10000,
-		hooks: {
-			beforeRequest: [
-				(request) => {
-					request.headers.set("User-Agent", "edge-readme-stats");
-					if (token) {
-						request.headers.set("Authorization", `bearer ${token}`);
-					}
-				},
-			],
+		headers: {
+			Accept: "application/vnd.github.v4+json",
+			Authorization: token ? `bearer ${token}` : undefined,
+			"User-Agent": "edge-readme-stats", // GitHub requires a User-Agent header
+			"Accept-Encoding": "gzip, deflate, br, zstd", // Enable compression
 		},
 	});
 

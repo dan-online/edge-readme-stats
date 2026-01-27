@@ -18,7 +18,7 @@ describe("StatsCard", () => {
 			<StatsCard
 				username="testuser"
 				stats={mockStats}
-				theme={themes.default}
+				theme={themes.github}
 				showIcons={true}
 				hideRank={false}
 				hideBorder={false}
@@ -33,7 +33,7 @@ describe("StatsCard", () => {
 			<StatsCard
 				username="testuser"
 				stats={mockStats}
-				theme={themes.default}
+				theme={themes.github}
 				showIcons={true}
 				hideRank={true}
 				hideBorder={false}
@@ -48,7 +48,7 @@ describe("StatsCard", () => {
 			<StatsCard
 				username="testuser"
 				stats={mockStats}
-				theme={themes.default}
+				theme={themes.github}
 				showIcons={true}
 				hideRank={false}
 				hideBorder={false}

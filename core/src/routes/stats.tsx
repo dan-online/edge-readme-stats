@@ -10,13 +10,13 @@ import { resolveLocale, t } from "../lib/i18n.ts";
 import { resolveTheme } from "../lib/themes.ts";
 import { StatsCard } from "../render/cards/stats.tsx";
 import { Card } from "../render/components/card.tsx";
-import type { UserStats } from "../types/index.ts";
+import { coerceBoolean, type UserStats } from "../types/index.ts";
 import { BaseQuerySchema } from "./schemas.ts";
 
-const StatsQuerySchema = v.object({
+export const StatsQuerySchema = v.object({
 	...BaseQuerySchema.entries,
-	show_icons: v.optional(v.string()),
-	hide_rank: v.optional(v.string()),
+	show_icons: coerceBoolean,
+	hide_rank: coerceBoolean,
 });
 
 export function createStatsRoute(
@@ -45,7 +45,7 @@ export function createStatsRoute(
 			const i18n = t(locale);
 
 			if (!config.isUsernameAllowed(username)) {
-				const errorTheme = resolveTheme("default", {});
+				const errorTheme = resolveTheme();
 				const errorSvg = (
 					<Card title="Error" theme={errorTheme} width={350} height={100}>
 						<text
@@ -73,7 +73,7 @@ export function createStatsRoute(
 					await cache?.set(cacheKey, stats);
 				}
 
-				const theme = resolveTheme(query.theme ?? "default", {
+				const theme = resolveTheme(query.theme, {
 					bg_color: query.bg_color,
 					title_color: query.title_color,
 					text_color: query.text_color,
@@ -86,12 +86,12 @@ export function createStatsRoute(
 						username={username}
 						stats={stats}
 						theme={theme}
-						showIcons={query.show_icons !== "false"}
-						hideRank={query.hide_rank === "true"}
-						hideBorder={query.hide_border === "true"}
-						hide={query.hide?.split(",").map((s) => s.trim()) ?? []}
+						showIcons={query.show_icons}
+						hideRank={query.hide_rank }
+						hideBorder={query.hide_border}
+						hide={query.hide}
 						locale={locale}
-						animate={query.disable_animations !== "true"}
+						animate={!query.disable_animations}
 					/>
 				);
 
@@ -102,7 +102,7 @@ export function createStatsRoute(
 			} catch (error) {
 				if (error instanceof GitHubError) {
 					const isNotFound = error.errors.some((e) => e.type === "NOT_FOUND");
-					const errorTheme = resolveTheme("default", {});
+					const errorTheme = resolveTheme();
 					const errorSvg = (
 						<Card title="Error" theme={errorTheme} width={350} height={100}>
 							<text

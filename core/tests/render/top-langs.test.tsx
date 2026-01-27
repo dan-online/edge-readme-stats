@@ -15,7 +15,7 @@ describe("TopLangsCard", () => {
 			<TopLangsCard
 				username="testuser"
 				languages={mockLanguages}
-				theme={themes.default}
+				theme={themes.github}
 				hideBorder={false}
 				layout="default"
 				langsCount={5}
@@ -29,7 +29,7 @@ describe("TopLangsCard", () => {
 			<TopLangsCard
 				username="testuser"
 				languages={mockLanguages}
-				theme={themes.default}
+				theme={themes.github}
 				hideBorder={false}
 				layout="compact"
 				langsCount={5}
@@ -43,7 +43,7 @@ describe("TopLangsCard", () => {
 			<TopLangsCard
 				username="testuser"
 				languages={mockLanguages}
-				theme={themes.default}
+				theme={themes.github}
 				hideBorder={false}
 				layout="default"
 				langsCount={2}

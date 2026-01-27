@@ -13,10 +13,10 @@ import { Card } from "../render/components/card.tsx";
 import type { LanguageStats } from "../types/index.ts";
 import { BaseQuerySchema } from "./schemas.ts";
 
-const TopLangsQuerySchema = v.object({
+export const TopLangsQuerySchema = v.object({
 	...BaseQuerySchema.entries,
 	langs_count: v.optional(v.string()),
-	layout: v.optional(v.picklist(["default", "compact", "donut"])),
+	layout: v.fallback(v.picklist(["compact", "donut"]), "compact"),
 });
 
 export function createTopLangsRoute(
@@ -45,7 +45,7 @@ export function createTopLangsRoute(
 			const i18n = t(locale);
 
 			if (!config.isUsernameAllowed(username)) {
-				const errorTheme = resolveTheme("default", {});
+				const errorTheme = resolveTheme();
 				const errorSvg = (
 					<Card title="Error" theme={errorTheme} width={350} height={100}>
 						<text
@@ -65,16 +65,15 @@ export function createTopLangsRoute(
 			}
 
 			try {
-				const hide = query.hide?.split(",").map((s) => s.trim()) ?? [];
-				const cacheKey = `${username.toLowerCase()}:${hide.sort().join(",")}`;
+				const cacheKey = `${username.toLowerCase()}:${query.hide?.sort().join(",")}`;
 				let languages = await cache?.get(cacheKey);
 
 				if (!languages) {
-					languages = await fetchTopLanguages(client, username, hide);
+					languages = await fetchTopLanguages(client, username, query.hide);
 					await cache?.set(cacheKey, languages);
 				}
 
-				const theme = resolveTheme(query.theme ?? "default", {
+				const theme = resolveTheme(query.theme, {
 					bg_color: query.bg_color,
 					title_color: query.title_color,
 					text_color: query.text_color,
@@ -89,11 +88,11 @@ export function createTopLangsRoute(
 						username={username}
 						languages={languages}
 						theme={theme}
-						hideBorder={query.hide_border === "true"}
+						hideBorder={query.hide_border}
 						layout={query.layout ?? "compact"}
 						langsCount={langsCount}
 						locale={locale}
-						animate={query.disable_animations !== "true"}
+						animate={query.disable_animations }
 					/>
 				);
 
@@ -104,7 +103,7 @@ export function createTopLangsRoute(
 			} catch (error) {
 				if (error instanceof GitHubError) {
 					const isNotFound = error.errors.some((e) => e.type === "NOT_FOUND");
-					const errorTheme = resolveTheme("default", {});
+					const errorTheme = resolveTheme();
 					const errorSvg = (
 						<Card title="Error" theme={errorTheme} width={350} height={100}>
 							<text
