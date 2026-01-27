@@ -2,13 +2,13 @@ import { Hono } from "hono";
 import { html, raw } from "hono/html";
 import * as v from "valibot";
 import type { Locale } from "../lib/i18n.ts";
-import { resolveTheme, themeNames, type ThemeName } from "../lib/themes.ts";
-import { StatsCard } from "../render/cards/stats.tsx";
+import { resolveTheme, type ThemeName, themeNames } from "../lib/themes.ts";
 import { TopLangsCard } from "../render/cards/langs.tsx";
+import { StatsCard } from "../render/cards/stats.tsx";
 import type { LanguageStats, UserStats } from "../types/index.ts";
+import { TopLangsQuerySchema } from "./langs.tsx";
 import { BaseQuerySchema } from "./schemas.ts";
 import { StatsQuerySchema } from "./stats.tsx";
-import { TopLangsQuerySchema } from "./langs.tsx";
 
 const LOCALES = [
 	{ code: "en", name: "English" },
@@ -301,12 +301,14 @@ export function createGeneratorRoute() {
 									</div>
 									<label>Hide Stats</label>
 									<div class="checkbox-group">
-										${STATS_OPTIONS.map((s) => html`
+										${STATS_OPTIONS.map(
+											(s) => html`
 											<div class="checkbox-item">
 												<input type="checkbox" id="hide_${s.value}" onchange="updatePreview()" />
 												<label for="hide_${s.value}">${s.label}</label>
 											</div>
-										`)}
+										`,
+										)}
 									</div>
 								</div>
 								<div id="langs-options" class="hidden">
@@ -471,14 +473,16 @@ export function createGeneratorRoute() {
 							}, 1500);
 						}
 
-						const themes = ${raw(JSON.stringify(
-							Object.fromEntries(
-								themeNames.map((name) => [
-									name,
-									resolveTheme(name as ThemeName),
-								]),
+						const themes = ${raw(
+							JSON.stringify(
+								Object.fromEntries(
+									themeNames.map((name) => [
+										name,
+										resolveTheme(name as ThemeName),
+									]),
+								),
 							),
-						))};
+						)};
 
 						function applyTheme() {
 							const baseTheme = themes[document.getElementById("theme").value] || themes.github;

@@ -1,5 +1,5 @@
-import type { Locale } from "../lib/i18n";
 import * as v from "valibot";
+import type { Locale } from "../lib/i18n";
 
 export const coerceBoolean = v.fallback(
 	v.pipe(

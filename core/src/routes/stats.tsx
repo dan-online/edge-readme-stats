@@ -87,7 +87,7 @@ export function createStatsRoute(
 						stats={stats}
 						theme={theme}
 						showIcons={query.show_icons}
-						hideRank={query.hide_rank }
+						hideRank={query.hide_rank}
 						hideBorder={query.hide_border}
 						hide={query.hide}
 						locale={locale}
