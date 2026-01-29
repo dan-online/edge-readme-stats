@@ -21,6 +21,7 @@ describe("TopLangsCard", () => {
 		layout: "compact",
 		langs_count: 5,
 		lang: "en",
+		size: "lg",
 		hide: [],
 		theme: "light",
 	};

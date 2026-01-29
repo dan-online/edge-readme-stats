@@ -16,21 +16,21 @@ Generate dynamic GitHub statistics cards that run anywhere - Cloudflare Workers,
 
 ### Stats Card
 
-![GitHub Stats](https://edge-readme-stats.dancodes.online/stats?username=dan-online)
-![GitHub Stats Radical](https://edge-readme-stats.dancodes.online/stats?username=dan-online&theme=radical)
-![GitHub Stats Custom](https://edge-readme-stats.dancodes.online/stats?username=dan-online&bg_color=0d1117&title_color=58a6ff&text_color=c9d1d9&icon_color=f0883e&border_color=30363d)
+![GitHub Stats](https://edge-readme-stats.dancodes.online/stats?username=dan-online&size=md)
+![GitHub Stats Radical](https://edge-readme-stats.dancodes.online/stats?username=dan-online&theme=radical&size=md)
+![GitHub Stats Custom](https://edge-readme-stats.dancodes.online/stats?username=dan-online&bg_color=0d1117&title_color=58a6ff&text_color=c9d1d9&icon_color=f0883e&border_color=30363d&size=md)
 
 ### Top Languages
 
-![Top Languages](https://edge-readme-stats.dancodes.online/langs?username=dan-online&theme=tokyonight)
-![Top Languages Donut](https://edge-readme-stats.dancodes.online/langs?username=dan-online&theme=catppuccin&layout=donut)
-![Top Languages Dracula](https://edge-readme-stats.dancodes.online/langs?username=dan-online&theme=dracula&langs_count=3)
+![Top Languages](https://edge-readme-stats.dancodes.online/langs?username=dan-online&theme=tokyonight&size=md)
+![Top Languages Dracula](https://edge-readme-stats.dancodes.online/langs?username=dan-online&theme=dracula&langs_count=3&size=md)
+![Top Languages Donut](https://edge-readme-stats.dancodes.online/langs?username=dan-online&theme=catppuccin&layout=donut&size=md)
 
 ### Contribution Heatmap
 
-![Heatmap Grid](https://edge-readme-stats.dancodes.online/heatmap?username=dan-online&theme=nord)
-![Heatmap Compact](https://edge-readme-stats.dancodes.online/heatmap?username=dan-online&theme=gruvbox&layout=compact)
-![Heatmap Custom](https://edge-readme-stats.dancodes.online/heatmap?username=dan-online&time_range=90&theme=monokai)
+![Heatmap Grid](https://edge-readme-stats.dancodes.online/heatmap?username=dan-online&theme=nord&size=md)
+![Heatmap Custom](https://edge-readme-stats.dancodes.online/heatmap?username=dan-online&time_range=90&theme=monokai&size=md)
+![Heatmap Compact](https://edge-readme-stats.dancodes.online/heatmap?username=dan-online&theme=gruvbox&layout=compact&size=md)
 
 ## Quick Start
 
@@ -88,6 +88,7 @@ docker run -p 3000:3000 \
 | `username` | required | GitHub username |
 | `theme` | `github` | Theme name (see [Themes](#themes)) |
 | `lang` | auto | Language code (see [Internationalization](#internationalization)) |
+| `size` | `lg` | Card size: `sm` (50%), `md` (75%), `lg` (100%), `xl` (125%) |
 | `icons` | `true` | Show icons |
 | `rank` | `true` | Show rank circle |
 | `stars` | `true` | Show stars count |
@@ -111,6 +112,7 @@ docker run -p 3000:3000 \
 | `username` | required | GitHub username |
 | `theme` | `github` | Theme name (see [Themes](#themes)) |
 | `lang` | auto | Language code (see [Internationalization](#internationalization)) |
+| `size` | `lg` | Card size: `sm` (50%), `md` (75%), `lg` (100%), `xl` (125%) |
 | `hide` | - | Hide languages (comma-separated) |
 | `langs_count` | `6` | Number of languages (max 6) |
 | `layout` | `compact` | Layout: `compact`, `donut` |
@@ -130,6 +132,7 @@ docker run -p 3000:3000 \
 | `username` | required | GitHub username |
 | `theme` | `github` | Theme name (see [Themes](#themes)) |
 | `lang` | auto | Language code (see [Internationalization](#internationalization)) |
+| `size` | `lg` | Card size: `sm` (50%), `md` (75%), `lg` (100%), `xl` (125%) |
 | `layout` | `grid` | Layout: `grid`, `compact` |
 | `time_range` | `365` | Number of days to show (1-365) |
 | `total` | `true` | Show total contributions |

@@ -1,5 +1,6 @@
 import { resolveLocale, t } from "../../lib/i18n.ts";
 import type { TopLangsQuery } from "../../routes/langs.tsx";
+import { sizeScales } from "../../routes/schemas.ts";
 import type { LanguageStats, Theme } from "../../types/index.ts";
 import { Card } from "../components/card.tsx";
 import { MultiProgress } from "../components/progress.tsx";
@@ -130,6 +131,7 @@ export function TopLangsCard({
 	const locale = resolveLocale(query.lang, null);
 	const i18n = t(locale).topLangs;
 	const displayLangs = languages.slice(0, query.langs_count);
+	const scale = sizeScales[query.size];
 
 	if (query.layout === "compact") {
 		return (
@@ -138,6 +140,7 @@ export function TopLangsCard({
 				theme={theme}
 				width={400}
 				height={120}
+				scale={scale}
 				border={query.border}
 				animate={query.animations}
 				themeStyles={themeStyles}
@@ -207,6 +210,7 @@ export function TopLangsCard({
 				theme={theme}
 				width={400}
 				height={cardHeight}
+				scale={scale}
 				border={query.border}
 				animate={query.animations}
 				themeStyles={themeStyles}
@@ -263,6 +267,7 @@ export function TopLangsCard({
 			theme={theme}
 			width={350}
 			height={cardHeight}
+			scale={scale}
 			border={query.border}
 			animate={query.animations}
 			themeStyles={themeStyles}

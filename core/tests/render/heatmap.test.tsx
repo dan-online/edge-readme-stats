@@ -44,6 +44,7 @@ describe("HeatmapCard", () => {
 		current_streak: true,
 		longest_streak: true,
 		lang: "en",
+		size: "lg",
 		hide: [],
 		theme: "light",
 	};

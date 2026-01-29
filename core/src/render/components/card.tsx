@@ -7,6 +7,7 @@ interface CardProps {
 	themeStyles: string;
 	width?: number;
 	height?: number;
+	scale?: number;
 	border?: boolean;
 	animate?: boolean;
 	children: Child;
@@ -33,16 +34,19 @@ export function Card({
 	themeStyles,
 	width = 495,
 	height = 195,
+	scale = 1,
 	border = true,
 	animate = true,
 	children,
 }: CardProps) {
 	const borderRadius = 4.5;
+	const scaledWidth = Math.round(width * scale);
+	const scaledHeight = Math.round(height * scale);
 
 	return (
 		<svg
-			width={width}
-			height={height}
+			width={scaledWidth}
+			height={scaledHeight}
 			viewBox={`0 0 ${width} ${height}`}
 			xmlns="http://www.w3.org/2000/svg"
 			role="img"

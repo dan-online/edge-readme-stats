@@ -1,4 +1,5 @@
 import { resolveLocale, t } from "../../lib/i18n.ts";
+import { sizeScales } from "../../routes/schemas.ts";
 import type { StatsQuery } from "../../routes/stats.tsx";
 import type { Theme, UserStats } from "../../types/index.ts";
 import { Card } from "../components/card.tsx";
@@ -60,6 +61,7 @@ export function StatsCard({
 	}[];
 
 	const cardWidth = query.rank ? 495 : 350;
+	const scale = sizeScales[query.size];
 
 	return (
 		<Card
@@ -68,6 +70,7 @@ export function StatsCard({
 			themeStyles={themeStyles}
 			width={cardWidth}
 			height={195}
+			scale={scale}
 			border={query.border}
 			animate={query.animations}
 		>

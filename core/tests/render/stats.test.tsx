@@ -30,6 +30,7 @@ describe("StatsCard", () => {
 		contribs: true,
 		lang: "en",
 		theme: "light",
+		size: "lg",
 		hide: [],
 	};
 

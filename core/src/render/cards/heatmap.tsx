@@ -1,5 +1,6 @@
 import { resolveLocale, t } from "../../lib/i18n.ts";
 import type { HeatmapQuery } from "../../routes/heatmap.tsx";
+import { sizeScales } from "../../routes/schemas.ts";
 import type { ContributionData, Theme } from "../../types/index.ts";
 import { Card } from "../components/card.tsx";
 import {
@@ -43,6 +44,7 @@ export function HeatmapCard({
 
 	const cardWidth = Math.max(contentWidth + 50, 350);
 	const cardHeight = 60 + statsHeight + contentHeight + 20;
+	const scale = sizeScales[query.size];
 
 	return (
 		<Card
@@ -51,6 +53,7 @@ export function HeatmapCard({
 			themeStyles={themeStyles}
 			width={cardWidth}
 			height={cardHeight}
+			scale={scale}
 			border={query.border}
 			animate={query.animations}
 		>
