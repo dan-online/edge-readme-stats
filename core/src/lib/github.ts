@@ -1,5 +1,6 @@
 import ky from "ky";
 import type { GitHubGraphQLResponse } from "../types/index.ts";
+import { inflight } from "./inflight.ts";
 
 export class GitHubError extends Error {
 	constructor(public errors: Array<{ message: string; type?: string }>) {
@@ -30,15 +31,22 @@ export function createGitHubClient(token?: string) {
 			query: string,
 			variables: Record<string, unknown> = {},
 		): Promise<T> {
-			const response = await client
-				.post("graphql", { json: { query, variables } })
-				.json<GitHubGraphQLResponse<T>>();
+			const response = await inflight(
+				`github-graphql-${JSON.stringify({ query, variables })}`,
+				async () => {
+					const res = await client
+						.post("graphql", { json: { query, variables } })
+						.json<GitHubGraphQLResponse<T>>();
 
-			if (response.errors?.length) {
-				throw new GitHubError(response.errors);
-			}
+					if (res.errors?.length) {
+						throw new GitHubError(res.errors);
+					}
 
-			return response.data;
+					return res.data;
+				},
+			);
+
+			return response;
 		},
 	};
 }

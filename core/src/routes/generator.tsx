@@ -552,7 +552,7 @@ export function createGeneratorRoute() {
 								icon_color: themeObj.icon.slice(1),
 								border_color: themeObj.border.slice(1),
 							});
-							const previewUrl = "https://edge-readme-stats.dancodes.workers.dev/stats?" + previewParams;
+							const previewUrl = "https://" + window.location.host + "/stats?" + previewParams;
 							const body = [
 								"## New Theme: " + themeName,
 								"",

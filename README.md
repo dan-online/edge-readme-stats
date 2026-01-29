@@ -16,39 +16,39 @@ Generate dynamic GitHub statistics cards that run anywhere - Cloudflare Workers,
 
 ### Stats Cards
 
-![GitHub Stats Light](https://edge-readme-stats.dancodes.workers.dev/stats?username=dan-online&theme=light)
-![GitHub Stats Dark](https://edge-readme-stats.dancodes.workers.dev/stats?username=dan-online&theme=dark)
-![GitHub Stats Radical](https://edge-readme-stats.dancodes.workers.dev/stats?username=dan-online&theme=radical)
-![GitHub Stats Tokyo Night](https://edge-readme-stats.dancodes.workers.dev/stats?username=dan-online&theme=tokyonight)
-![GitHub Stats Dracula](https://edge-readme-stats.dancodes.workers.dev/stats?username=dan-online&theme=dracula)
-![GitHub Stats Catppuccin](https://edge-readme-stats.dancodes.workers.dev/stats?username=dan-online&theme=catppuccin)
-![GitHub Stats No Icons](https://edge-readme-stats.dancodes.workers.dev/stats?username=dan-online&theme=nord&show_icons=false)
-![GitHub Stats No Border](https://edge-readme-stats.dancodes.workers.dev/stats?username=dan-online&theme=onedark&hide_border=true)
-![GitHub Stats Custom](https://edge-readme-stats.dancodes.workers.dev/stats?username=dan-online&bg_color=0d1117&title_color=58a6ff&text_color=c9d1d9&icon_color=f0883e&border_color=30363d)
-![GitHub Stats Hidden Rank](https://edge-readme-stats.dancodes.workers.dev/stats?username=dan-online&theme=gruvbox&hide_rank=true)
+![GitHub Stats Light](https://edge-readme-stats.dancodes.online/stats?username=dan-online&theme=light)
+![GitHub Stats Dark](https://edge-readme-stats.dancodes.online/stats?username=dan-online&theme=dark)
+![GitHub Stats Radical](https://edge-readme-stats.dancodes.online/stats?username=dan-online&theme=radical)
+![GitHub Stats Tokyo Night](https://edge-readme-stats.dancodes.online/stats?username=dan-online&theme=tokyonight)
+![GitHub Stats Dracula](https://edge-readme-stats.dancodes.online/stats?username=dan-online&theme=dracula)
+![GitHub Stats Catppuccin](https://edge-readme-stats.dancodes.online/stats?username=dan-online&theme=catppuccin)
+![GitHub Stats No Icons](https://edge-readme-stats.dancodes.online/stats?username=dan-online&theme=nord&show_icons=false)
+![GitHub Stats No Border](https://edge-readme-stats.dancodes.online/stats?username=dan-online&theme=onedark&hide_border=true)
+![GitHub Stats Custom](https://edge-readme-stats.dancodes.online/stats?username=dan-online&bg_color=0d1117&title_color=58a6ff&text_color=c9d1d9&icon_color=f0883e&border_color=30363d)
+![GitHub Stats Hidden Rank](https://edge-readme-stats.dancodes.online/stats?username=dan-online&theme=gruvbox&hide_rank=true)
 
-![Top Languages](https://edge-readme-stats.dancodes.workers.dev/langs?username=dan-online)
-![Top Languages Dark](https://edge-readme-stats.dancodes.workers.dev/langs?username=dan-online&theme=dark)
-![Top Languages Tokyo Night](https://edge-readme-stats.dancodes.workers.dev/langs?username=dan-online&theme=tokyonight)
-![Top Languages Count](https://edge-readme-stats.dancodes.workers.dev/langs?username=dan-online&theme=catppuccin&langs_count=3)
-![Top Languages Hide](https://edge-readme-stats.dancodes.workers.dev/langs?username=dan-online&theme=dracula&hide=html,css)
-![Top Languages No Border](https://edge-readme-stats.dancodes.workers.dev/langs?username=dan-online&theme=nord&hide_border=true)
-![Top Languages Donut](https://edge-readme-stats.dancodes.workers.dev/langs?username=dan-online&layout=donut)
-![Top Languages Radical Donut](https://edge-readme-stats.dancodes.workers.dev/langs?username=dan-online&theme=radical&layout=donut)
-![Top Languages Monokai Donut](https://edge-readme-stats.dancodes.workers.dev/langs?username=dan-online&theme=monokai&layout=donut)
-![Top Languages Custom Donut](https://edge-readme-stats.dancodes.workers.dev/langs?username=dan-online&layout=donut&bg_color=1a1b27&title_color=70a5fd&text_color=a9b1d6&border_color=414868)
+![Top Languages](https://edge-readme-stats.dancodes.online/langs?username=dan-online)
+![Top Languages Dark](https://edge-readme-stats.dancodes.online/langs?username=dan-online&theme=dark)
+![Top Languages Tokyo Night](https://edge-readme-stats.dancodes.online/langs?username=dan-online&theme=tokyonight)
+![Top Languages Count](https://edge-readme-stats.dancodes.online/langs?username=dan-online&theme=catppuccin&langs_count=3)
+![Top Languages Hide](https://edge-readme-stats.dancodes.online/langs?username=dan-online&theme=dracula&hide=html,css)
+![Top Languages No Border](https://edge-readme-stats.dancodes.online/langs?username=dan-online&theme=nord&hide_border=true)
+![Top Languages Donut](https://edge-readme-stats.dancodes.online/langs?username=dan-online&layout=donut)
+![Top Languages Radical Donut](https://edge-readme-stats.dancodes.online/langs?username=dan-online&theme=radical&layout=donut)
+![Top Languages Monokai Donut](https://edge-readme-stats.dancodes.online/langs?username=dan-online&theme=monokai&layout=donut)
+![Top Languages Custom Donut](https://edge-readme-stats.dancodes.online/langs?username=dan-online&layout=donut&bg_color=1a1b27&title_color=70a5fd&text_color=a9b1d6&border_color=414868)
 
 ## Quick Start
 
 ### Use the Public Instance
 
-**[Try the Card Generator](https://edge-readme-stats.dancodes.workers.dev/generator)** to build your card visually!
+**[Try the Card Generator](https://edge-readme-stats.dancodes.online/generator)** to build your card visually!
 
 Or use these URLs directly:
 
 ```md
-![GitHub Stats](https://edge-readme-stats.dancodes.workers.dev/stats?username=YOUR_USERNAME)
-![Top Languages](https://edge-readme-stats.dancodes.workers.dev/langs?username=YOUR_USERNAME)
+![GitHub Stats](https://edge-readme-stats.dancodes.online/stats?username=YOUR_USERNAME)
+![Top Languages](https://edge-readme-stats.dancodes.online/langs?username=YOUR_USERNAME)
 ```
 
 ### Self-Hosting
@@ -83,7 +83,7 @@ docker run -p 3000:3000 \
 ### Stats Card
 
 ```md
-![Stats](https://edge-readme-stats.dancodes.workers.dev/stats?username=dan-online)
+![Stats](https://edge-readme-stats.dancodes.online/stats?username=dan-online)
 ```
 
 **Parameters:**
@@ -102,7 +102,7 @@ docker run -p 3000:3000 \
 ### Top Languages Card
 
 ```md
-![Languages](https://edge-readme-stats.dancodes.workers.dev/langs?username=dan-online)
+![Languages](https://edge-readme-stats.dancodes.online/langs?username=dan-online)
 ```
 
 **Parameters:**
@@ -120,7 +120,7 @@ docker run -p 3000:3000 \
 
 ## Card Generator
 
-The interactive **[Card Generator](https://edge-readme-stats.dancodes.workers.dev/generator)** lets you build and customize your cards visually:
+The interactive **[Card Generator](https://edge-readme-stats.dancodes.online/generator)** lets you build and customize your cards visually:
 
 - **Live Preview** - See your card update in real-time as you adjust settings
 - **Card Type Tabs** - Switch between Stats and Languages cards
