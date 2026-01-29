@@ -15,7 +15,19 @@ import { BaseQuerySchema } from "./schemas.ts";
 
 export const TopLangsQuerySchema = v.object({
 	...BaseQuerySchema.entries,
-	langs_count: v.optional(v.string()),
+	langs_count: v.fallback(
+		v.pipe(
+			v.string(),
+			v.transform((s) => {
+				const n = Number.parseInt(s, 10);
+
+				if (Number.isNaN(n) || n < 1 || n > 6) return 6;
+
+				return Math.floor(n);
+			}),
+		),
+		6,
+	),
 	layout: v.fallback(v.picklist(["compact", "donut"]), "compact"),
 });
 
