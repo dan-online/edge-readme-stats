@@ -25,7 +25,7 @@ Generate dynamic GitHub statistics cards that run anywhere - Cloudflare Workers,
 ![Top Languages](https://edge-readme-stats.dancodes.online/langs?username=dan-online&theme=tokyonight)
 ![Top Languages Dracula](https://edge-readme-stats.dancodes.online/langs?username=dan-online&theme=dracula&langs_count=3)
 ![Top Languages Donut](https://edge-readme-stats.dancodes.online/langs?username=dan-online&theme=catppuccin&layout=donut)
-![Top Languages Donut](https://edge-readme-stats.dancodes.online/langs?username=dan-online&theme=catppuccin&layout=dark&langs_count=4)
+![Top Languages Donut](https://edge-readme-stats.dancodes.online/langs?username=dan-online&theme=onedark&layout=donut&langs_count=4)
 
 ### Contribution Heatmap
 
