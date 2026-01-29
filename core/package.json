@@ -9,7 +9,8 @@
 		"./fetchers/*": "./src/fetchers/*.ts",
 		"./render/*": "./src/render/*.tsx",
 		"./render/components/*": "./src/render/components/*.tsx",
-		"./render/cards/*": "./src/render/cards/*.tsx"
+		"./render/cards/*": "./src/render/cards/*.tsx",
+		"./types/*": "./src/types/*.ts"
 	},
 	"scripts": {
 		"test": "vitest",

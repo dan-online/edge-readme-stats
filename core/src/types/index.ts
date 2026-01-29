@@ -1,14 +1,3 @@
-import * as v from "valibot";
-import type { Locale } from "../lib/i18n";
-
-export const coerceBoolean = v.fallback(
-	v.pipe(
-		v.string(),
-		v.transform((s) => s === "true"),
-	),
-	false,
-);
-
 export interface Theme {
 	bg: string;
 	title: string;
@@ -36,35 +25,21 @@ export interface LanguageStats {
 	color: string;
 }
 
-export interface StatsCardOptions {
-	username: string;
-	stats: UserStats;
-	theme: Theme;
-	themeStyles: string;
-	showIcons: boolean;
-	hideRank: boolean;
-	hideBorder: boolean;
-	hide: string[];
-	locale: Locale;
-	animate?: boolean;
+export interface ContributionDay {
+	date: string;
+	contributionCount: number;
+	weekday: number;
+	level: 0 | 1 | 2 | 3 | 4;
 }
 
-export interface TopLangsCardOptions {
-	username: string;
-	languages: LanguageStats[];
-	theme: Theme;
-	themeStyles: string;
-	hideBorder: boolean;
-	layout: "compact" | "donut";
-	langsCount: number;
-	locale: Locale;
-	animate?: boolean;
+export interface ContributionWeek {
+	contributionDays: ContributionDay[];
 }
 
-export interface GitHubGraphQLResponse<T> {
-	data: T;
-	errors?: Array<{
-		message: string;
-		type?: string;
-	}>;
+export interface ContributionData {
+	username: string;
+	totalContributions: number;
+	currentStreak: number;
+	longestStreak: number;
+	weeks: ContributionWeek[];
 }

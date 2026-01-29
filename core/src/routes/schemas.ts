@@ -1,7 +1,7 @@
 import * as v from "valibot";
+import { coerceBooleanTrue } from "../lib/coerce.ts";
 import { locales } from "../lib/i18n.ts";
 import { themeNames } from "../lib/themes.ts";
-import { coerceBoolean } from "../types/index.ts";
 
 export const BaseQuerySchema = v.object({
 	username: v.string(),
@@ -14,11 +14,13 @@ export const BaseQuerySchema = v.object({
 		),
 		[],
 	),
-	hide_border: coerceBoolean,
-	disable_animations: coerceBoolean,
+	border: coerceBooleanTrue,
+	animations: coerceBooleanTrue,
 	bg_color: v.optional(v.string()),
 	title_color: v.optional(v.string()),
 	text_color: v.optional(v.string()),
 	icon_color: v.optional(v.string()),
 	border_color: v.optional(v.string()),
 });
+
+export type BaseQuery = v.InferOutput<typeof BaseQuerySchema>;

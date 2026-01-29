@@ -7,7 +7,7 @@ interface CardProps {
 	themeStyles: string;
 	width?: number;
 	height?: number;
-	hideBorder?: boolean;
+	border?: boolean;
 	animate?: boolean;
 	children: Child;
 }
@@ -33,7 +33,7 @@ export function Card({
 	themeStyles,
 	width = 495,
 	height = 195,
-	hideBorder = false,
+	border = true,
 	animate = true,
 	children,
 }: CardProps) {
@@ -60,7 +60,7 @@ export function Card({
 				rx={borderRadius}
 				fill={theme.bg}
 				class={animate ? "animate-fade" : undefined}
-				{...(hideBorder ? {} : { stroke: theme.border, "stroke-width": "1" })}
+				{...(border ? { stroke: theme.border, "stroke-width": "1" } : {})}
 			/>
 			<text
 				x="25"

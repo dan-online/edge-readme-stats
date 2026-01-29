@@ -4,10 +4,17 @@ import { openAPIRouteHandler } from "hono-openapi";
 import pkg from "../package.json" with { type: "json" };
 import type { AppConfig } from "./lib/config.ts";
 import { createGitHubClient } from "./lib/github.ts";
-import { createGeneratorRoute } from "./routes/generator.tsx";
-import { createTopLangsRoute } from "./routes/langs.tsx";
-import { createStatsRoute } from "./routes/stats.tsx";
-import type { LanguageStats, UserStats } from "./types/index.ts";
+import {
+	createGeneratorRoute,
+	createHeatmapRoute,
+	createStatsRoute,
+	createTopLangsRoute,
+} from "./routes/index.ts";
+import type {
+	ContributionData,
+	LanguageStats,
+	UserStats,
+} from "./types/index.ts";
 
 export { clearAllCaches, MemoryCache } from "./lib/cache.ts";
 export type { AppConfigVariables as AppConfigOptions } from "./lib/config.ts";
@@ -31,6 +38,13 @@ export function createApp(config: AppConfig) {
 				config.variables.cache.maxSize,
 			)
 		: null;
+	const heatmapCache = config.variables.cache.enabled
+		? config.getCache<ContributionData>(
+				"heatmap",
+				config.variables.cache.ttl,
+				config.variables.cache.maxSize,
+			)
+		: null;
 
 	app.get("/", (c) =>
 		c.json({ repo: "dan-online/edge-readme-stats", version: pkg.version }),
@@ -38,6 +52,7 @@ export function createApp(config: AppConfig) {
 
 	app.route("/stats", createStatsRoute(client, config, statsCache));
 	app.route("/langs", createTopLangsRoute(client, config, langsCache));
+	app.route("/heatmap", createHeatmapRoute(client, config, heatmapCache));
 	app.route("/generator", createGeneratorRoute());
 
 	app.get(

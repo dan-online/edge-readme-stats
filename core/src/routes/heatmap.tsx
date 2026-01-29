@@ -1,7 +1,7 @@
 import { Hono } from "hono";
 import { describeRoute, validator } from "hono-openapi";
 import * as v from "valibot";
-import { fetchUserStats } from "../fetchers/stats.ts";
+import { fetchContributionData } from "../fetchers/heatmap.ts";
 import type { CacheProvider } from "../lib/cache.ts";
 import { coerceBooleanTrue } from "../lib/coerce.ts";
 import type { AppConfig } from "../lib/config.ts";
@@ -9,43 +9,51 @@ import type { GitHubClient } from "../lib/github.ts";
 import { GitHubError } from "../lib/github.ts";
 import { resolveLocale, t } from "../lib/i18n.ts";
 import { CSS_VAR_THEME, generateThemeStyles } from "../lib/themes.ts";
-import { StatsCard } from "../render/cards/stats.tsx";
+import { HeatmapCard } from "../render/cards/heatmap.tsx";
 import { Card } from "../render/components/card.tsx";
-import type { UserStats } from "../types/index.ts";
+import type { ContributionData } from "../types/index.ts";
 import { BaseQuerySchema } from "./schemas.ts";
 
-export const StatsQuerySchema = v.object({
+export const HeatmapQuerySchema = v.object({
 	...BaseQuerySchema.entries,
-	icons: coerceBooleanTrue,
-	rank: coerceBooleanTrue,
-	stars: coerceBooleanTrue,
-	commits: coerceBooleanTrue,
-	prs: coerceBooleanTrue,
-	issues: coerceBooleanTrue,
-	contribs: coerceBooleanTrue,
+	layout: v.fallback(v.picklist(["grid", "compact"]), "grid"),
+	time_range: v.fallback(
+		v.pipe(
+			v.string(),
+			v.transform((s) => {
+				const n = Number.parseInt(s, 10);
+				if (Number.isNaN(n) || n < 1) return 365;
+				return Math.min(n, 365);
+			}),
+		),
+		365,
+	),
+	total: coerceBooleanTrue,
+	current_streak: coerceBooleanTrue,
+	longest_streak: coerceBooleanTrue,
 });
 
-export type StatsQuery = v.InferOutput<typeof StatsQuerySchema>;
+export type HeatmapQuery = v.InferOutput<typeof HeatmapQuerySchema>;
 
-export function createStatsRoute(
+export function createHeatmapRoute(
 	client: GitHubClient,
 	config: AppConfig,
-	cache: CacheProvider<UserStats> | null,
+	cache: CacheProvider<ContributionData> | null,
 ) {
 	const app = new Hono();
 
 	app.get(
 		"/",
 		describeRoute({
-			description: "Generate GitHub stats card SVG",
+			description: "Generate GitHub contribution heatmap card SVG",
 			responses: {
-				200: { description: "SVG stats card" },
+				200: { description: "SVG heatmap card" },
 				403: { description: "Username not allowed" },
 				404: { description: "User not found" },
 				429: { description: "Rate limited" },
 			},
 		}),
-		validator("query", StatsQuerySchema),
+		validator("query", HeatmapQuerySchema),
 		async (c) => {
 			const query = c.req.valid("query");
 			const username = query.username;
@@ -78,12 +86,16 @@ export function createStatsRoute(
 			}
 
 			try {
-				const cacheKey = username.toLowerCase();
-				let stats = await cache?.get(cacheKey);
+				const cacheKey = `${username.toLowerCase()}:${query.time_range}`;
+				let data = await cache?.get(cacheKey);
 
-				if (!stats) {
-					stats = await fetchUserStats(client, username);
-					await cache?.set(cacheKey, stats);
+				if (!data) {
+					data = await fetchContributionData(
+						client,
+						username,
+						query.time_range,
+					);
+					await cache?.set(cacheKey, data);
 				}
 
 				const customColors = {
@@ -95,9 +107,9 @@ export function createStatsRoute(
 				};
 
 				const svg = (
-					<StatsCard
+					<HeatmapCard
 						query={query}
-						stats={stats}
+						data={data}
 						theme={CSS_VAR_THEME}
 						themeStyles={generateThemeStyles(query.theme, customColors)}
 					/>

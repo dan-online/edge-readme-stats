@@ -4,6 +4,7 @@ import {
 } from "@edge-readme-stats/core/lib/themes";
 import { describe, expect, it } from "vitest";
 import { TopLangsCard } from "../../src/render/cards/langs";
+import type { TopLangsQuery } from "../../src/routes/langs";
 
 describe("TopLangsCard", () => {
 	const mockLanguages = [
@@ -13,17 +14,24 @@ describe("TopLangsCard", () => {
 		{ name: "Rust", percentage: 10, color: "#dea584" },
 	];
 
+	const baseQuery: TopLangsQuery = {
+		username: "testuser",
+		border: true,
+		animations: true,
+		layout: "compact",
+		langs_count: 5,
+		lang: "en",
+		hide: [],
+		theme: "light",
+	};
+
 	it("renders default layout correctly", () => {
 		const svg = (
 			<TopLangsCard
-				username="testuser"
+				query={baseQuery}
 				languages={mockLanguages}
 				theme={CSS_VAR_THEME}
 				themeStyles={generateThemeStyles("light")}
-				hideBorder={false}
-				layout="compact"
-				langsCount={5}
-				locale="en"
 			/>
 		);
 		expect(svg.toString()).toMatchSnapshot();
@@ -32,14 +40,10 @@ describe("TopLangsCard", () => {
 	it("renders compact layout correctly", () => {
 		const svg = (
 			<TopLangsCard
-				username="testuser"
+				query={baseQuery}
 				languages={mockLanguages}
 				theme={CSS_VAR_THEME}
 				themeStyles={generateThemeStyles("light")}
-				hideBorder={false}
-				layout="compact"
-				langsCount={5}
-				locale="en"
 			/>
 		);
 		expect(svg.toString()).toMatchSnapshot();
@@ -48,14 +52,10 @@ describe("TopLangsCard", () => {
 	it("limits languages to langsCount", () => {
 		const svg = (
 			<TopLangsCard
-				username="testuser"
+				query={{ ...baseQuery, langs_count: 2 }}
 				languages={mockLanguages}
 				theme={CSS_VAR_THEME}
 				themeStyles={generateThemeStyles("light")}
-				hideBorder={false}
-				layout="compact"
-				langsCount={2}
-				locale="en"
 			/>
 		);
 		const output = svg.toString();

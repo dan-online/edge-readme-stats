@@ -1,7 +1,15 @@
-import { t } from "../../lib/i18n.ts";
-import type { LanguageStats, TopLangsCardOptions } from "../../types/index.ts";
+import { resolveLocale, t } from "../../lib/i18n.ts";
+import type { TopLangsQuery } from "../../routes/langs.tsx";
+import type { LanguageStats, Theme } from "../../types/index.ts";
 import { Card } from "../components/card.tsx";
 import { MultiProgress } from "../components/progress.tsx";
+
+interface TopLangsCardProps {
+	query: TopLangsQuery;
+	languages: LanguageStats[];
+	theme: Theme;
+	themeStyles: string;
+}
 
 interface LanguageRowProps {
 	lang: LanguageStats;
@@ -114,27 +122,24 @@ function DonutSegment({
 }
 
 export function TopLangsCard({
+	query,
 	languages,
 	theme,
 	themeStyles,
-	hideBorder,
-	layout,
-	langsCount,
-	locale,
-	animate = true,
-}: TopLangsCardOptions) {
+}: TopLangsCardProps) {
+	const locale = resolveLocale(query.lang, null);
 	const i18n = t(locale).topLangs;
-	const displayLangs = languages.slice(0, langsCount);
+	const displayLangs = languages.slice(0, query.langs_count);
 
-	if (layout === "compact") {
+	if (query.layout === "compact") {
 		return (
 			<Card
 				title={i18n.title}
 				theme={theme}
 				width={400}
 				height={120}
-				hideBorder={hideBorder}
-				animate={animate}
+				border={query.border}
+				animate={query.animations}
 				themeStyles={themeStyles}
 			>
 				<MultiProgress
@@ -169,7 +174,7 @@ export function TopLangsCard({
 		);
 	}
 
-	if (layout === "donut") {
+	if (query.layout === "donut") {
 		const outerRadius = 70;
 		const innerRadius = 45;
 		const cx = outerRadius;
@@ -202,8 +207,8 @@ export function TopLangsCard({
 				theme={theme}
 				width={400}
 				height={cardHeight}
-				hideBorder={hideBorder}
-				animate={animate}
+				border={query.border}
+				animate={query.animations}
 				themeStyles={themeStyles}
 			>
 				<g>
@@ -258,8 +263,8 @@ export function TopLangsCard({
 			theme={theme}
 			width={350}
 			height={cardHeight}
-			hideBorder={hideBorder}
-			animate={animate}
+			border={query.border}
+			animate={query.animations}
 			themeStyles={themeStyles}
 		>
 			{displayLangs.map((lang, index) => (

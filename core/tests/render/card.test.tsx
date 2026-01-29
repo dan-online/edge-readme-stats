@@ -25,13 +25,13 @@ describe("Card component", () => {
 		expect(svg.toString()).toContain('width="495"');
 	});
 
-	it("renders without border when hideBorder is true", () => {
+	it("renders without border when border is false", () => {
 		const svg = (
 			<Card
 				title="Test"
 				theme={testTheme}
 				themeStyles={generateThemeStyles()}
-				hideBorder
+				border={false}
 			>
 				<text>Content</text>
 			</Card>

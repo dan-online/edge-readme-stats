@@ -40,7 +40,7 @@ interface StatsResponse {
 				hasNextPage: boolean;
 				endCursor: string | null;
 			};
-			nodes: Array<{ stargazerCount: number }>;
+			nodes: { stargazerCount: number }[];
 		};
 		pullRequests: { totalCount: number };
 		issues: { totalCount: number };

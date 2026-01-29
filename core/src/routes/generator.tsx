@@ -8,9 +8,15 @@ import {
 	type ThemeName,
 	themeNames,
 } from "../lib/themes.ts";
+import { HeatmapCard } from "../render/cards/heatmap.tsx";
 import { TopLangsCard } from "../render/cards/langs.tsx";
 import { StatsCard } from "../render/cards/stats.tsx";
-import type { LanguageStats, UserStats } from "../types/index.ts";
+import type {
+	ContributionData,
+	LanguageStats,
+	UserStats,
+} from "../types/index.ts";
+import { HeatmapQuerySchema } from "./heatmap.tsx";
 import { TopLangsQuerySchema } from "./langs.tsx";
 import { BaseQuerySchema } from "./schemas.ts";
 import { StatsQuerySchema } from "./stats.tsx";
@@ -36,23 +42,27 @@ const THEME_LABELS: Record<ThemeName, string> = {
 	monokai: "Monokai",
 };
 
-const STATS_OPTIONS = [
-	{ value: "stars", label: "Stars" },
-	{ value: "commits", label: "Commits" },
-	{ value: "prs", label: "PRs" },
-	{ value: "issues", label: "Issues" },
-	{ value: "contribs", label: "Contributions" },
-];
-
 const LAYOUTS = ["compact", "donut"];
 
-const PreviewQuerySchema = v.object({
-	...BaseQuerySchema.entries,
-	...StatsQuerySchema.entries,
-	...TopLangsQuerySchema.entries,
-	username: v.fallback(v.string(), "your-username"),
-	type: v.fallback(v.picklist(["stats", "langs"]), "stats"),
-});
+const HEATMAP_LAYOUTS = ["grid", "compact"];
+
+const PreviewQuerySchema = v.union([
+	v.object({
+		type: v.literal("stats"),
+		...BaseQuerySchema.entries,
+		...StatsQuerySchema.entries,
+	}),
+	v.object({
+		type: v.literal("langs"),
+		...BaseQuerySchema.entries,
+		...TopLangsQuerySchema.entries,
+	}),
+	v.object({
+		type: v.literal("heatmap"),
+		...BaseQuerySchema.entries,
+		...HeatmapQuerySchema.entries,
+	}),
+]);
 
 const DUMMY_STATS: UserStats = {
 	username: "your-username",
@@ -71,6 +81,83 @@ const DUMMY_LANGS: LanguageStats[] = [
 	{ name: "Go", percentage: 8.7, color: "#00ADD8" },
 	{ name: "JavaScript", percentage: 5.0, color: "#f1e05a" },
 ];
+
+function generateDummyHeatmap(timeRange = 365): ContributionData {
+	const today = new Date();
+	const startDate = new Date(today);
+	startDate.setDate(startDate.getDate() - (timeRange - 1));
+
+	const allDays: {
+		date: string;
+		contributionCount: number;
+		weekday: number;
+		level: 0 | 1 | 2 | 3 | 4;
+	}[] = [];
+
+	let totalContributions = 0;
+	let longestStreak = 0;
+	let tempStreak = 0;
+
+	for (let i = 0; i < timeRange; i++) {
+		const date = new Date(startDate);
+		date.setDate(date.getDate() + i);
+		const count = Math.floor(Math.random() * 12);
+		totalContributions += count;
+
+		if (count > 0) {
+			tempStreak++;
+			longestStreak = Math.max(longestStreak, tempStreak);
+		} else {
+			tempStreak = 0;
+		}
+
+		allDays.push({
+			date: date.toISOString().split("T")[0] ?? "",
+			contributionCount: count,
+			weekday: date.getDay(),
+			level: (count === 0 ? 0 : Math.min(4, Math.ceil(count / 3))) as
+				| 0
+				| 1
+				| 2
+				| 3
+				| 4,
+		});
+	}
+
+	const weeks: ContributionData["weeks"] = [];
+	let currentWeek: (typeof allDays)[number][] = [];
+	let lastWeekday = -1;
+
+	for (const day of allDays) {
+		if (day.weekday <= lastWeekday && currentWeek.length > 0) {
+			weeks.push({ contributionDays: currentWeek });
+			currentWeek = [];
+		}
+		currentWeek.push(day);
+		lastWeekday = day.weekday;
+	}
+	if (currentWeek.length > 0) {
+		weeks.push({ contributionDays: currentWeek });
+	}
+
+	let currentStreak = 0;
+	for (let i = allDays.length - 1; i >= 0; i--) {
+		const day = allDays[i];
+		if (day && day.contributionCount > 0) {
+			currentStreak++;
+		} else {
+			break;
+		}
+	}
+
+	return {
+		username: "your-username",
+		totalContributions,
+		currentStreak,
+		longestStreak,
+		weeks,
+	};
+}
 
 export function createGeneratorRoute() {
 	const app = new Hono();
@@ -94,31 +181,31 @@ export function createGeneratorRoute() {
 		if (query.type === "langs") {
 			svg = (
 				<TopLangsCard
-					username={query.username}
+					query={{ ...query, animations: false }}
 					languages={DUMMY_LANGS}
 					theme={CSS_VAR_THEME}
 					themeStyles={themeStyles}
-					hideBorder={query.hide_border}
-					layout={query.layout}
-					langsCount={query.langs_count}
-					locale={query.lang}
-					animate={false}
+				/>
+			).toString();
+		} else if (query.type === "heatmap") {
+			const heatmapData = generateDummyHeatmap(query.time_range);
+			heatmapData.username = query.username;
+			svg = (
+				<HeatmapCard
+					query={{ ...query, animations: false }}
+					data={heatmapData}
+					theme={CSS_VAR_THEME}
+					themeStyles={themeStyles}
 				/>
 			).toString();
 		} else {
 			const stats = { ...DUMMY_STATS, username: query.username };
 			svg = (
 				<StatsCard
-					username={query.username}
+					query={{ ...query, animations: false }}
 					stats={stats}
 					theme={CSS_VAR_THEME}
 					themeStyles={themeStyles}
-					showIcons={query.show_icons}
-					hideRank={query.hide_rank}
-					hideBorder={query.hide_border}
-					hide={query.hide}
-					locale={query.lang}
-					animate={false}
 				/>
 			).toString();
 		}
@@ -291,6 +378,7 @@ export function createGeneratorRoute() {
 								<div class="tabs">
 									<div class="tab active" data-type="stats">Stats</div>
 									<div class="tab" data-type="langs">Languages</div>
+									<div class="tab" data-type="heatmap">Heatmap</div>
 								</div>
 
 								<label for="username">GitHub Username</label>
@@ -311,27 +399,36 @@ export function createGeneratorRoute() {
 								<h2>Options</h2>
 								<div id="stats-options">
 									<div class="toggle-row">
-										<label>Show Icons</label>
-										<input type="checkbox" id="show_icons" checked onchange="updatePreview()" />
+										<label>Icons</label>
+										<input type="checkbox" id="icons" checked onchange="updatePreview()" />
 									</div>
 									<div class="toggle-row">
-										<label>Hide Rank</label>
-										<input type="checkbox" id="hide_rank" onchange="updatePreview()" />
+										<label>Rank</label>
+										<input type="checkbox" id="rank" checked onchange="updatePreview()" />
 									</div>
 									<div class="toggle-row">
-										<label>Hide Border</label>
-										<input type="checkbox" id="hide_border" onchange="updatePreview()" />
+										<label>Border</label>
+										<input type="checkbox" id="border" checked onchange="updatePreview()" />
 									</div>
-									<label>Hide Stats</label>
-									<div class="checkbox-group">
-										${STATS_OPTIONS.map(
-											(s) => html`
-											<div class="checkbox-item">
-												<input type="checkbox" id="hide_${s.value}" onchange="updatePreview()" />
-												<label for="hide_${s.value}">${s.label}</label>
-											</div>
-										`,
-										)}
+									<div class="toggle-row">
+										<label>Stars</label>
+										<input type="checkbox" id="stats_stars" checked onchange="updatePreview()" />
+									</div>
+									<div class="toggle-row">
+										<label>Commits</label>
+										<input type="checkbox" id="stats_commits" checked onchange="updatePreview()" />
+									</div>
+									<div class="toggle-row">
+										<label>PRs</label>
+										<input type="checkbox" id="stats_prs" checked onchange="updatePreview()" />
+									</div>
+									<div class="toggle-row">
+										<label>Issues</label>
+										<input type="checkbox" id="stats_issues" checked onchange="updatePreview()" />
+									</div>
+									<div class="toggle-row">
+										<label>Contributions</label>
+										<input type="checkbox" id="stats_contribs" checked onchange="updatePreview()" />
 									</div>
 								</div>
 								<div id="langs-options" class="hidden">
@@ -342,8 +439,32 @@ export function createGeneratorRoute() {
 										${LAYOUTS.map((l) => html`<option value="${l}">${l}</option>`)}
 									</select>
 									<div class="toggle-row">
-										<label>Hide Border</label>
-										<input type="checkbox" id="langs_hide_border" onchange="updatePreview()" />
+										<label>Border</label>
+										<input type="checkbox" id="langs_border" checked onchange="updatePreview()" />
+									</div>
+								</div>
+								<div id="heatmap-options" class="hidden">
+									<label for="heatmap_layout">Layout</label>
+									<select id="heatmap_layout" onchange="updatePreview()">
+										${HEATMAP_LAYOUTS.map((l) => html`<option value="${l}">${l}</option>`)}
+									</select>
+									<label for="time_range">Time Range (days)</label>
+									<input type="number" id="time_range" min="1" max="365" value="365" onchange="updatePreview()" />
+									<div class="toggle-row">
+										<label>Border</label>
+										<input type="checkbox" id="heatmap_border" checked onchange="updatePreview()" />
+									</div>
+									<div class="toggle-row">
+										<label>Total</label>
+										<input type="checkbox" id="heatmap_total" checked onchange="updatePreview()" />
+									</div>
+									<div class="toggle-row">
+										<label>Current Streak</label>
+										<input type="checkbox" id="heatmap_current_streak" checked onchange="updatePreview()" />
+									</div>
+									<div class="toggle-row">
+										<label>Longest Streak</label>
+										<input type="checkbox" id="heatmap_longest_streak" checked onchange="updatePreview()" />
 									</div>
 								</div>
 							</div>
@@ -415,6 +536,7 @@ export function createGeneratorRoute() {
 								cardType = tab.dataset.type;
 								document.getElementById("stats-options").classList.toggle("hidden", cardType !== "stats");
 								document.getElementById("langs-options").classList.toggle("hidden", cardType !== "langs");
+								document.getElementById("heatmap-options").classList.toggle("hidden", cardType !== "heatmap");
 								updatePreview();
 							});
 						});
@@ -440,20 +562,28 @@ export function createGeneratorRoute() {
 							if (!isDefault("lang")) params.set("lang", document.getElementById("lang").value);
 
 							if (cardType === "stats") {
-								if (!document.getElementById("show_icons").checked) params.set("show_icons", "false");
-								if (document.getElementById("hide_rank").checked) params.set("hide_rank", "true");
-								if (document.getElementById("hide_border").checked) params.set("hide_border", "true");
-
-								const hide = [];
-								["stars", "commits", "prs", "issues", "contribs"].forEach(s => {
-									if (document.getElementById("hide_" + s).checked) hide.push(s);
-								});
-								if (hide.length) params.set("hide", hide.join(","));
-							} else {
+								if (!document.getElementById("icons").checked) params.set("icons", "false");
+								if (!document.getElementById("rank").checked) params.set("rank", "false");
+								if (!document.getElementById("border").checked) params.set("border", "false");
+								if (!document.getElementById("stats_stars").checked) params.set("stars", "false");
+								if (!document.getElementById("stats_commits").checked) params.set("commits", "false");
+								if (!document.getElementById("stats_prs").checked) params.set("prs", "false");
+								if (!document.getElementById("stats_issues").checked) params.set("issues", "false");
+								if (!document.getElementById("stats_contribs").checked) params.set("contribs", "false");
+							} else if (cardType === "langs") {
 								const count = document.getElementById("langs_count").value;
 								if (count !== "5") params.set("langs_count", count);
 								if (!isDefault("layout")) params.set("layout", document.getElementById("layout").value);
-								if (document.getElementById("langs_hide_border").checked) params.set("hide_border", "true");
+								if (!document.getElementById("langs_border").checked) params.set("border", "false");
+							} else if (cardType === "heatmap") {
+								const heatmapLayout = document.getElementById("heatmap_layout").value;
+								if (heatmapLayout !== "grid") params.set("layout", heatmapLayout);
+								const timeRange = document.getElementById("time_range").value;
+								if (timeRange !== "365") params.set("time_range", timeRange);
+								if (!document.getElementById("heatmap_border").checked) params.set("border", "false");
+								if (!document.getElementById("heatmap_total").checked) params.set("total", "false");
+								if (!document.getElementById("heatmap_current_streak").checked) params.set("current_streak", "false");
+								if (!document.getElementById("heatmap_longest_streak").checked) params.set("longest_streak", "false");
 							}
 
 							["bg_color", "title_color", "text_color", "icon_color", "border_color"].forEach(c => {
@@ -464,27 +594,31 @@ export function createGeneratorRoute() {
 							return params;
 						}
 
+						function getEndpointAndAltText() {
+							if (cardType === "stats") return { endpoint: "stats", altText: "GitHub Stats" };
+							if (cardType === "langs") return { endpoint: "langs", altText: "Top Languages" };
+							return { endpoint: "heatmap", altText: "Contribution Heatmap" };
+						}
+
 						function updatePreview() {
 							const previewParams = buildParams(true);
 							previewParams.set("cache", crypto.randomUUID());
 							document.getElementById("preview-img").src = baseUrl + "/generator/preview?" + previewParams.toString();
 
 							const outputParams = buildParams(false);
-							const endpoint = cardType === "stats" ? "stats" : "langs";
-							const altText = cardType === "stats" ? "GitHub Stats" : "Top Languages";
+							const { endpoint, altText } = getEndpointAndAltText();
 							const url = baseUrl + "/" + endpoint + "?" + outputParams.toString();
 							document.getElementById("markdown-output").textContent = "![" + altText + "](" + url + ")";
 						}
 
 						function copyText(type, btn) {
 							const outputParams = buildParams(false);
-							const endpoint = cardType === "stats" ? "stats" : "langs";
+							const { endpoint, altText } = getEndpointAndAltText();
 							const url = baseUrl + "/" + endpoint + "?" + outputParams.toString();
 
 							if (type === "url") {
 								navigator.clipboard.writeText(url);
 							} else {
-								const altText = cardType === "stats" ? "GitHub Stats" : "Top Languages";
 								navigator.clipboard.writeText("![" + altText + "](" + url + ")");
 							}
 

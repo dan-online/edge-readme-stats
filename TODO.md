@@ -4,7 +4,7 @@ Future extension ideas for edge-readme-stats.
 
 ## New Card Types
 
-- [ ] **Contribution Heatmap Card** - GitHub-style calendar grid showing daily commits
+- [x] **Contribution Heatmap Card** - GitHub-style calendar grid showing daily commits
 - [ ] **Streak Card** - Current and longest contribution streak display
 - [ ] **Achievement/Badge System** - Unlockable badges for milestones (100 PRs, 1k stars, etc.)
 - [ ] **Organization Stats Card** - Stats for GitHub organizations

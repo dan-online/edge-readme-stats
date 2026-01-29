@@ -31,6 +31,8 @@ export const TopLangsQuerySchema = v.object({
 	layout: v.fallback(v.picklist(["compact", "donut"]), "compact"),
 });
 
+export type TopLangsQuery = v.InferOutput<typeof TopLangsQuerySchema>;
+
 export function createTopLangsRoute(
 	client: GitHubClient,
 	config: AppConfig,
@@ -98,19 +100,12 @@ export function createTopLangsRoute(
 					border_color: query.border_color,
 				};
 
-				const langsCount = Math.min(Number(query.langs_count) || 5, 10);
-
 				const svg = (
 					<TopLangsCard
-						username={username}
+						query={query}
 						languages={languages}
 						theme={CSS_VAR_THEME}
 						themeStyles={generateThemeStyles(query.theme, customColors)}
-						hideBorder={query.hide_border}
-						layout={query.layout ?? "compact"}
-						langsCount={langsCount}
-						locale={locale}
-						animate={!query.disable_animations}
 					/>
 				);
 

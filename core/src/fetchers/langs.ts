@@ -24,14 +24,14 @@ query userLanguages($username: String!) {
 interface LangsResponse {
 	user: {
 		repositories: {
-			nodes: Array<{
+			nodes: {
 				languages: {
-					edges: Array<{
+					edges: {
 						size: number;
 						node: { name: string; color: string | null };
-					}>;
+					}[];
 				};
-			}>;
+			}[];
 		};
 	};
 }

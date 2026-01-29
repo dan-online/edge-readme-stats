@@ -14,29 +14,23 @@ Generate dynamic GitHub statistics cards that run anywhere - Cloudflare Workers,
 
 ## Examples
 
-### Stats Cards
+### Stats Card
 
-![GitHub Stats Light](https://edge-readme-stats.dancodes.online/stats?username=dan-online&theme=light)
-![GitHub Stats Dark](https://edge-readme-stats.dancodes.online/stats?username=dan-online&theme=dark)
+![GitHub Stats](https://edge-readme-stats.dancodes.online/stats?username=dan-online)
 ![GitHub Stats Radical](https://edge-readme-stats.dancodes.online/stats?username=dan-online&theme=radical)
-![GitHub Stats Tokyo Night](https://edge-readme-stats.dancodes.online/stats?username=dan-online&theme=tokyonight)
-![GitHub Stats Dracula](https://edge-readme-stats.dancodes.online/stats?username=dan-online&theme=dracula)
-![GitHub Stats Catppuccin](https://edge-readme-stats.dancodes.online/stats?username=dan-online&theme=catppuccin)
-![GitHub Stats No Icons](https://edge-readme-stats.dancodes.online/stats?username=dan-online&theme=nord&show_icons=false)
-![GitHub Stats No Border](https://edge-readme-stats.dancodes.online/stats?username=dan-online&theme=onedark&hide_border=true)
 ![GitHub Stats Custom](https://edge-readme-stats.dancodes.online/stats?username=dan-online&bg_color=0d1117&title_color=58a6ff&text_color=c9d1d9&icon_color=f0883e&border_color=30363d)
-![GitHub Stats Hidden Rank](https://edge-readme-stats.dancodes.online/stats?username=dan-online&theme=gruvbox&hide_rank=true)
 
-![Top Languages](https://edge-readme-stats.dancodes.online/langs?username=dan-online)
-![Top Languages Dark](https://edge-readme-stats.dancodes.online/langs?username=dan-online&theme=dark)
-![Top Languages Tokyo Night](https://edge-readme-stats.dancodes.online/langs?username=dan-online&theme=tokyonight)
-![Top Languages Count](https://edge-readme-stats.dancodes.online/langs?username=dan-online&theme=catppuccin&langs_count=3)
-![Top Languages Hide](https://edge-readme-stats.dancodes.online/langs?username=dan-online&theme=dracula&hide=html,css)
-![Top Languages No Border](https://edge-readme-stats.dancodes.online/langs?username=dan-online&theme=nord&hide_border=true)
-![Top Languages Donut](https://edge-readme-stats.dancodes.online/langs?username=dan-online&layout=donut)
-![Top Languages Radical Donut](https://edge-readme-stats.dancodes.online/langs?username=dan-online&theme=radical&layout=donut)
-![Top Languages Monokai Donut](https://edge-readme-stats.dancodes.online/langs?username=dan-online&theme=monokai&layout=donut)
-![Top Languages Custom Donut](https://edge-readme-stats.dancodes.online/langs?username=dan-online&layout=donut&bg_color=1a1b27&title_color=70a5fd&text_color=a9b1d6&border_color=414868)
+### Top Languages
+
+![Top Languages](https://edge-readme-stats.dancodes.online/langs?username=dan-online&theme=tokyonight)
+![Top Languages Donut](https://edge-readme-stats.dancodes.online/langs?username=dan-online&theme=catppuccin&layout=donut)
+![Top Languages Dracula](https://edge-readme-stats.dancodes.online/langs?username=dan-online&theme=dracula&langs_count=3)
+
+### Contribution Heatmap
+
+![Heatmap Grid](https://edge-readme-stats.dancodes.online/heatmap?username=dan-online&theme=nord)
+![Heatmap Compact](https://edge-readme-stats.dancodes.online/heatmap?username=dan-online&theme=gruvbox&layout=compact)
+![Heatmap Custom](https://edge-readme-stats.dancodes.online/heatmap?username=dan-online&time_range=90&theme=monokai)
 
 ## Quick Start
 
@@ -49,6 +43,7 @@ Or use these URLs directly:
 ```md
 ![GitHub Stats](https://edge-readme-stats.dancodes.online/stats?username=YOUR_USERNAME)
 ![Top Languages](https://edge-readme-stats.dancodes.online/langs?username=YOUR_USERNAME)
+![Contribution Heatmap](https://edge-readme-stats.dancodes.online/heatmap?username=YOUR_USERNAME)
 ```
 
 ### Self-Hosting
@@ -93,11 +88,15 @@ docker run -p 3000:3000 \
 | `username` | required | GitHub username |
 | `theme` | `github` | Theme name (see [Themes](#themes)) |
 | `lang` | auto | Language code (see [Internationalization](#internationalization)) |
-| `hide` | - | Hide stats: `stars,commits,prs,issues,contribs` |
-| `show_icons` | `true` | Show icons |
-| `hide_rank` | `false` | Hide rank circle |
-| `hide_border` | `false` | Hide card border |
-| `disable_animations` | `false` | Disable CSS animations |
+| `icons` | `true` | Show icons |
+| `rank` | `true` | Show rank circle |
+| `stars` | `true` | Show stars count |
+| `commits` | `true` | Show commits count |
+| `prs` | `true` | Show pull requests count |
+| `issues` | `true` | Show issues count |
+| `contribs` | `true` | Show contributed to count |
+| `border` | `true` | Show card border |
+| `animations` | `true` | Enable CSS animations |
 
 ### Top Languages Card
 
@@ -115,15 +114,36 @@ docker run -p 3000:3000 \
 | `hide` | - | Hide languages (comma-separated) |
 | `langs_count` | `6` | Number of languages (max 6) |
 | `layout` | `compact` | Layout: `compact`, `donut` |
-| `hide_border` | `false` | Hide card border |
-| `disable_animations` | `false` | Disable CSS animations |
+| `border` | `true` | Show card border |
+| `animations` | `true` | Enable CSS animations |
+
+### Contribution Heatmap Card
+
+```md
+![Heatmap](https://edge-readme-stats.dancodes.online/heatmap?username=dan-online)
+```
+
+**Parameters:**
+
+| Parameter | Default | Description |
+|-----------|---------|-------------|
+| `username` | required | GitHub username |
+| `theme` | `github` | Theme name (see [Themes](#themes)) |
+| `lang` | auto | Language code (see [Internationalization](#internationalization)) |
+| `layout` | `grid` | Layout: `grid`, `compact` |
+| `time_range` | `365` | Number of days to show (1-365) |
+| `total` | `true` | Show total contributions |
+| `current_streak` | `true` | Show current streak |
+| `longest_streak` | `true` | Show longest streak |
+| `border` | `true` | Show card border |
+| `animations` | `true` | Enable CSS animations |
 
 ## Card Generator
 
 The interactive **[Card Generator](https://edge-readme-stats.dancodes.online/generator)** lets you build and customize your cards visually:
 
 - **Live Preview** - See your card update in real-time as you adjust settings
-- **Card Type Tabs** - Switch between Stats and Languages cards
+- **Card Type Tabs** - Switch between Stats, Languages, and Heatmap cards
 - **Theme Selection** - Browse all 11 built-in themes
 - **Custom Colors** - Pick colors with color pickers or enter hex values
 - **Language Selection** - Preview cards in different languages
@@ -205,6 +225,7 @@ yarn lint
 | `GET /` | Returns version and repo info |
 | `GET /stats` | Generate stats card SVG |
 | `GET /langs` | Generate languages card SVG |
+| `GET /heatmap` | Generate contribution heatmap card SVG |
 | `GET /generator` | Interactive card builder UI |
 | `GET /docs` | Swagger UI |
 | `GET /openapi` | OpenAPI spec (JSON) |

@@ -4,6 +4,7 @@ import {
 } from "@edge-readme-stats/core/lib/themes";
 import { StatsCard } from "@edge-readme-stats/core/render/cards/stats";
 import { describe, expect, it } from "vitest";
+import type { StatsQuery } from "../../src/routes/stats";
 
 describe("StatsCard", () => {
 	const mockStats = {
@@ -16,35 +17,41 @@ describe("StatsCard", () => {
 		rank: { level: "A+", percentile: 85 },
 	};
 
+	const baseQuery: StatsQuery = {
+		username: "testuser",
+		icons: true,
+		rank: true,
+		border: true,
+		animations: true,
+		stars: true,
+		commits: true,
+		prs: true,
+		issues: true,
+		contribs: true,
+		lang: "en",
+		theme: "light",
+		hide: [],
+	};
+
 	it("renders correctly with default options", () => {
 		const svg = (
 			<StatsCard
-				username="testuser"
+				query={baseQuery}
 				stats={mockStats}
 				theme={CSS_VAR_THEME}
 				themeStyles={generateThemeStyles("light")}
-				showIcons={true}
-				hideRank={false}
-				hideBorder={false}
-				hide={[]}
-				locale="en"
 			/>
 		);
 		expect(svg.toString()).toMatchSnapshot();
 	});
 
-	it("hides rank when hideRank is true", () => {
+	it("hides rank when rank is false", () => {
 		const svg = (
 			<StatsCard
-				username="testuser"
+				query={{ ...baseQuery, rank: false }}
 				stats={mockStats}
 				theme={CSS_VAR_THEME}
 				themeStyles={generateThemeStyles("light")}
-				showIcons={true}
-				hideRank={true}
-				hideBorder={false}
-				hide={[]}
-				locale="en"
 			/>
 		);
 		expect(svg.toString()).not.toContain("A+");
@@ -53,15 +60,10 @@ describe("StatsCard", () => {
 	it("hides specified stats", () => {
 		const svg = (
 			<StatsCard
-				username="testuser"
+				query={{ ...baseQuery, stars: false, commits: false }}
 				stats={mockStats}
 				theme={CSS_VAR_THEME}
 				themeStyles={generateThemeStyles("light")}
-				showIcons={true}
-				hideRank={false}
-				hideBorder={false}
-				hide={["stars", "commits"]}
-				locale="en"
 			/>
 		);
 		const output = svg.toString();

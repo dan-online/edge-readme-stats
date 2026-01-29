@@ -1,9 +1,16 @@
 import ky from "ky";
-import type { GitHubGraphQLResponse } from "../types/index.ts";
 import { inflight } from "./inflight.ts";
 
+interface GitHubGraphQLResponse<T> {
+	data: T;
+	errors?: {
+		message: string;
+		type?: string;
+	}[];
+}
+
 export class GitHubError extends Error {
-	constructor(public errors: Array<{ message: string; type?: string }>) {
+	constructor(public errors: { message: string; type?: string }[]) {
 		super(`GitHub API Error: ${errors[0]?.message ?? "Unknown error"}`);
 		this.name = "GitHubError";
 	}

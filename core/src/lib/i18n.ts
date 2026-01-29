@@ -11,6 +11,14 @@ export const translations = {
 		topLangs: {
 			title: "Most Used Languages",
 		},
+		heatmap: {
+			title: (username: string) => `${username}'s Contributions`,
+			totalContributions: "Total",
+			currentStreak: "Current Streak",
+			longestStreak: "Longest Streak",
+			days: "days",
+			contributions: "contributions",
+		},
 		errors: {
 			userNotFound: "User not found",
 			usernameNotAllowed: "Username not allowed",
@@ -30,6 +38,14 @@ export const translations = {
 		},
 		topLangs: {
 			title: "最常用语言",
+		},
+		heatmap: {
+			title: (username: string) => `${username} 的贡献`,
+			totalContributions: "总计",
+			currentStreak: "当前连续",
+			longestStreak: "最长连续",
+			days: "天",
+			contributions: "次贡献",
 		},
 		errors: {
 			userNotFound: "用户未找到",
@@ -51,6 +67,14 @@ export const translations = {
 		topLangs: {
 			title: "Lenguajes Más Usados",
 		},
+		heatmap: {
+			title: (username: string) => `Contribuciones de ${username}`,
+			totalContributions: "Total",
+			currentStreak: "Racha Actual",
+			longestStreak: "Racha Más Larga",
+			days: "días",
+			contributions: "contribuciones",
+		},
 		errors: {
 			userNotFound: "Usuario no encontrado",
 			usernameNotAllowed: "Nombre de usuario no permitido",
@@ -70,6 +94,14 @@ export const translations = {
 		},
 		topLangs: {
 			title: "Linguagens Mais Usadas",
+		},
+		heatmap: {
+			title: (username: string) => `Contribuições de ${username}`,
+			totalContributions: "Total",
+			currentStreak: "Sequência Atual",
+			longestStreak: "Maior Sequência",
+			days: "dias",
+			contributions: "contribuições",
 		},
 		errors: {
 			userNotFound: "Usuário não encontrado",

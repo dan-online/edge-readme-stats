@@ -26,7 +26,7 @@ export function ProgressBar({
 }
 
 interface MultiProgressProps {
-	segments: Array<{ percentage: number; color: string }>;
+	segments: { percentage: number; color: string }[];
 	x: number;
 	y: number;
 	width?: number;
