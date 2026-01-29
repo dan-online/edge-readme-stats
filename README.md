@@ -22,15 +22,17 @@ Generate dynamic GitHub statistics cards that run anywhere - Cloudflare Workers,
 
 ### Top Languages
 
-![Top Languages](https://edge-readme-stats.dancodes.online/langs?username=dan-online&theme=tokyonight&size=md)
-![Top Languages Dracula](https://edge-readme-stats.dancodes.online/langs?username=dan-online&theme=dracula&langs_count=3&size=md)
-![Top Languages Donut](https://edge-readme-stats.dancodes.online/langs?username=dan-online&theme=catppuccin&layout=donut&size=md)
+![Top Languages](https://edge-readme-stats.dancodes.online/langs?username=dan-online&theme=tokyonight)
+![Top Languages Dracula](https://edge-readme-stats.dancodes.online/langs?username=dan-online&theme=dracula&langs_count=3)
+![Top Languages Donut](https://edge-readme-stats.dancodes.online/langs?username=dan-online&theme=catppuccin&layout=donut)
+![Top Languages Donut](https://edge-readme-stats.dancodes.online/langs?username=dan-online&theme=catppuccin&layout=dark&langs_count=4)
 
 ### Contribution Heatmap
 
-![Heatmap Grid](https://edge-readme-stats.dancodes.online/heatmap?username=dan-online&theme=nord&size=md)
-![Heatmap Custom](https://edge-readme-stats.dancodes.online/heatmap?username=dan-online&time_range=90&theme=monokai&size=md)
+![Heatmap Grid](https://edge-readme-stats.dancodes.online/heatmap?username=dan-online&theme=nord)
 ![Heatmap Compact](https://edge-readme-stats.dancodes.online/heatmap?username=dan-online&theme=gruvbox&layout=compact&size=md)
+![Heatmap Compact](https://edge-readme-stats.dancodes.online/heatmap?username=dan-online&theme=radical&layout=compact&size=md)
+![Heatmap Custom](https://edge-readme-stats.dancodes.online/heatmap?username=dan-online&time_range=90&theme=monokai&size=md)
 
 ## Quick Start
 
