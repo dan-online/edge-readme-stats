@@ -18,6 +18,7 @@ Generate dynamic GitHub statistics cards that run anywhere - Cloudflare Workers,
 
 ![GitHub Stats](https://edge-readme-stats.dancodes.online/stats?username=dan-online&size=md)
 ![GitHub Stats Radical](https://edge-readme-stats.dancodes.online/stats?username=dan-online&theme=radical&size=md)
+![GitHub Stats GruvBox](https://edge-readme-stats.dancodes.online/stats?username=dan-online&theme=gruvbox&size=md)
 ![GitHub Stats Custom](https://edge-readme-stats.dancodes.online/stats?username=dan-online&bg_color=0d1117&title_color=58a6ff&text_color=c9d1d9&icon_color=f0883e&border_color=30363d&size=md)
 
 ### Top Languages
