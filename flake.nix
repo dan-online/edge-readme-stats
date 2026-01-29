@@ -20,7 +20,6 @@
             buildInputs = with pkgs; [
               nodejs-slim_24
               corepack
-              biome
             ];
           };
         });
