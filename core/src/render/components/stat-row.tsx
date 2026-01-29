@@ -38,11 +38,14 @@ export function StatRow({
 					width="16"
 					height="16"
 					viewBox="0 0 16 16"
-					fill={theme.icon}
 					role="img"
 					aria-label={label}
 				>
-					<path fill-rule="evenodd" d={icons[icon] ?? icons.star} />
+					<path
+						fill-rule="evenodd"
+						fill={theme.icon}
+						d={icons[icon] ?? icons.star}
+					/>
 				</svg>
 			)}
 			<text

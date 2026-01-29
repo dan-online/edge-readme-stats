@@ -2,10 +2,10 @@ export const translations = {
 	en: {
 		stats: {
 			title: (username: string) => `${username}'s GitHub Stats`,
-			totalStars: "Total Stars",
-			totalCommits: "Total Commits",
-			totalPRs: "Total PRs",
-			totalIssues: "Total Issues",
+			totalStars: "Stars",
+			totalCommits: "Commits",
+			totalPRs: "PRs",
+			totalIssues: "Issues",
 			contributions: "Contributions",
 		},
 		topLangs: {
@@ -22,10 +22,10 @@ export const translations = {
 	zh: {
 		stats: {
 			title: (username: string) => `${username} 的 GitHub 统计`,
-			totalStars: "获得星标",
-			totalCommits: "提交总数",
+			totalStars: "星标",
+			totalCommits: "提交",
 			totalPRs: "拉取请求",
-			totalIssues: "问题总数",
+			totalIssues: "问题",
 			contributions: "贡献",
 		},
 		topLangs: {
@@ -42,10 +42,10 @@ export const translations = {
 	es: {
 		stats: {
 			title: (username: string) => `Estadísticas de GitHub de ${username}`,
-			totalStars: "Estrellas Totales",
-			totalCommits: "Commits Totales",
-			totalPRs: "PRs Totales",
-			totalIssues: "Issues Totales",
+			totalStars: "Estrellas",
+			totalCommits: "Commits",
+			totalPRs: "PRs",
+			totalIssues: "Issues",
 			contributions: "Contribuciones",
 		},
 		topLangs: {
@@ -62,10 +62,10 @@ export const translations = {
 	pt: {
 		stats: {
 			title: (username: string) => `Estatísticas do GitHub de ${username}`,
-			totalStars: "Estrelas Totais",
-			totalCommits: "Commits Totais",
-			totalPRs: "PRs Totais",
-			totalIssues: "Issues Totais",
+			totalStars: "Estrelas",
+			totalCommits: "Commits",
+			totalPRs: "PRs",
+			totalIssues: "Issues",
 			contributions: "Contribuições",
 		},
 		topLangs: {

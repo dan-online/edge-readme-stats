@@ -116,6 +116,7 @@ function DonutSegment({
 export function TopLangsCard({
 	languages,
 	theme,
+	themeStyles,
 	hideBorder,
 	layout,
 	langsCount,
@@ -134,6 +135,7 @@ export function TopLangsCard({
 				height={120}
 				hideBorder={hideBorder}
 				animate={animate}
+				themeStyles={themeStyles}
 			>
 				<MultiProgress
 					segments={displayLangs.map((l) => ({
@@ -202,6 +204,7 @@ export function TopLangsCard({
 				height={cardHeight}
 				hideBorder={hideBorder}
 				animate={animate}
+				themeStyles={themeStyles}
 			>
 				<g>
 					{segments.map((seg) => (
@@ -257,6 +260,7 @@ export function TopLangsCard({
 			height={cardHeight}
 			hideBorder={hideBorder}
 			animate={animate}
+			themeStyles={themeStyles}
 		>
 			{displayLangs.map((lang, index) => (
 				<LanguageRow key={lang.name} lang={lang} theme={theme} y={index * 25} />

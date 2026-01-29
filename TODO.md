@@ -16,7 +16,7 @@ Future extension ideas for edge-readme-stats.
 
 ## Enhancements
 
-- [ ] **GitHub Dark/Light Mode Detection** - Auto-switch themes based on GitHub's theme
+- [x] **GitHub Dark/Light Mode Detection** - Auto-switch themes based on GitHub's theme
 - [ ] **Custom SVG Animations** - User-configurable animation styles (slide, bounce, pulse)
 - [ ] **Gradient Backgrounds** - Support `bg_color=DEG,COLOR1,COLOR2` syntax
 - [ ] **More Layout Options** - Pie chart, vertical bars for languages card

@@ -1,8 +1,13 @@
 import { Hono } from "hono";
 import { html, raw } from "hono/html";
 import * as v from "valibot";
-import type { Locale } from "../lib/i18n.ts";
-import { resolveTheme, type ThemeName, themeNames } from "../lib/themes.ts";
+import {
+	CSS_VAR_THEME,
+	generateThemeStyles,
+	resolveTheme,
+	type ThemeName,
+	themeNames,
+} from "../lib/themes.ts";
 import { TopLangsCard } from "../render/cards/langs.tsx";
 import { StatsCard } from "../render/cards/stats.tsx";
 import type { LanguageStats, UserStats } from "../types/index.ts";
@@ -16,6 +21,20 @@ const LOCALES = [
 	{ code: "es", name: "Spanish" },
 	{ code: "pt", name: "Portuguese" },
 ];
+
+const THEME_LABELS: Record<ThemeName, string> = {
+	github: "GitHub (Auto)",
+	light: "Light",
+	dark: "Dark",
+	radical: "Radical",
+	tokyonight: "Tokyo Night",
+	dracula: "Dracula",
+	gruvbox: "Gruvbox",
+	nord: "Nord",
+	catppuccin: "Catppuccin",
+	onedark: "One Dark",
+	monokai: "Monokai",
+};
 
 const STATS_OPTIONS = [
 	{ value: "stars", label: "Stars" },
@@ -60,13 +79,15 @@ export function createGeneratorRoute() {
 		const rawQuery = c.req.query();
 		const query = v.parse(PreviewQuerySchema, rawQuery);
 
-		const theme = resolveTheme(query.theme, {
+		const customColors = {
 			bg_color: query.bg_color,
 			title_color: query.title_color,
 			text_color: query.text_color,
 			icon_color: query.icon_color,
 			border_color: query.border_color,
-		});
+		};
+
+		const themeStyles = generateThemeStyles(query.theme, customColors);
 
 		let svg: string;
 
@@ -75,7 +96,8 @@ export function createGeneratorRoute() {
 				<TopLangsCard
 					username={query.username}
 					languages={DUMMY_LANGS}
-					theme={theme}
+					theme={CSS_VAR_THEME}
+					themeStyles={themeStyles}
 					hideBorder={query.hide_border}
 					layout={query.layout}
 					langsCount={query.langs_count}
@@ -89,7 +111,8 @@ export function createGeneratorRoute() {
 				<StatsCard
 					username={query.username}
 					stats={stats}
-					theme={theme}
+					theme={CSS_VAR_THEME}
+					themeStyles={themeStyles}
 					showIcons={query.show_icons}
 					hideRank={query.hide_rank}
 					hideBorder={query.hide_border}
@@ -274,8 +297,8 @@ export function createGeneratorRoute() {
 								<input type="text" id="username" placeholder="your-username" oninput="updatePreview()" />
 
 								<label for="theme">Theme</label>
-								<select id="theme" onchange="updatePreview()">
-									${themeNames.map((t) => html`<option value="${t}">${t[0]?.toUpperCase() + t.slice(1)}</option>`)}
+								<select id="theme" onchange="updatePreview(); updateColorPlaceholders()">
+									${themeNames.map((t) => html`<option value="${t}">${THEME_LABELS[t]}</option>`)}
 								</select>
 
 								<label for="lang">Language</label>
@@ -360,7 +383,7 @@ export function createGeneratorRoute() {
 							<div class="card">
 								<h2>Preview</h2>
 								<div class="preview-container">
-									<img id="preview-img" src="${baseUrl}/generator/preview?type=stats" alt="Preview" />
+									<img id="preview-img" src="" alt="Preview" />
 								</div>
 								<p class="note">Preview uses sample data. Your actual stats will differ.</p>
 							</div>
@@ -443,6 +466,7 @@ export function createGeneratorRoute() {
 
 						function updatePreview() {
 							const previewParams = buildParams(true);
+							previewParams.set("cache", crypto.randomUUID());
 							document.getElementById("preview-img").src = baseUrl + "/generator/preview?" + previewParams.toString();
 
 							const outputParams = buildParams(false);
@@ -483,6 +507,23 @@ export function createGeneratorRoute() {
 								),
 							),
 						)};
+
+						function updateColorPlaceholders() {
+							const themeName = document.getElementById("theme").value;
+							const theme = themes[themeName] || themes.light;
+
+							document.getElementById("bg_color").placeholder = theme.bg.slice(1);
+							document.getElementById("title_color").placeholder = theme.title.slice(1);
+							document.getElementById("text_color").placeholder = theme.text.slice(1);
+							document.getElementById("icon_color").placeholder = theme.icon.slice(1);
+							document.getElementById("border_color").placeholder = theme.border.slice(1);
+
+							document.getElementById("bg_color_picker").value = theme.bg;
+							document.getElementById("title_color_picker").value = theme.title;
+							document.getElementById("text_color_picker").value = theme.text;
+							document.getElementById("icon_color_picker").value = theme.icon;
+							document.getElementById("border_color_picker").value = theme.border;
+						}
 
 						function applyTheme() {
 							const baseTheme = themes[document.getElementById("theme").value] || themes.github;
@@ -530,8 +571,9 @@ export function createGeneratorRoute() {
 							window.open(issueUrl, "_blank");
 						}
 
-						// Initialize preview on page load
+						// Initialize on page load
 						updatePreview();
+						updateColorPlaceholders();
 					</script>
 				</body>
 			</html>

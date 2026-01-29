@@ -8,7 +8,7 @@ Generate dynamic GitHub statistics cards that run anywhere - Cloudflare Workers,
 
 - 🚀 **Edge-first** - Deploy close to requests for fast response times
 - 🌍 **Run anywhere** - Node.js, Bun, Deno, Cloudflare Workers, Vercel, Docker
-- 🎨 **10 themes** - Plus full custom color support
+- 🎨 **11 themes** - Including auto dark/light mode, plus custom colors
 - 📦 **Tiny footprint** - Minimal dependencies, fast cold starts
 - 🔒 **Self-host friendly** - Use your own GitHub token for higher rate limits
 
@@ -124,7 +124,7 @@ The interactive **[Card Generator](https://edge-readme-stats.dancodes.workers.de
 
 - **Live Preview** - See your card update in real-time as you adjust settings
 - **Card Type Tabs** - Switch between Stats and Languages cards
-- **Theme Selection** - Browse all 10 built-in themes
+- **Theme Selection** - Browse all 11 built-in themes
 - **Custom Colors** - Pick colors with color pickers or enter hex values
 - **Language Selection** - Preview cards in different languages
 - **One-Click Copy** - Copy markdown or URL directly to clipboard
@@ -134,7 +134,18 @@ The generator creates a preview using sample data so you can see how your card w
 
 ## Themes
 
-Available themes: `github` (default), `dark`, `radical`, `tokyonight`, `dracula`, `gruvbox`, `nord`, `catppuccin`, `onedark`, `monokai`
+Available themes: `github` (default), `light`, `dark`, `radical`, `tokyonight`, `dracula`, `gruvbox`, `nord`, `catppuccin`, `onedark`, `monokai`
+
+### Auto Dark/Light Mode
+
+The default `github` theme automatically adapts to the viewer's system preference using CSS `prefers-color-scheme` media queries:
+
+- **Dark mode** - Uses GitHub's dark theme colors
+- **Light mode** - Uses GitHub's light theme colors
+
+This means your card will match GitHub's interface whether the viewer is using dark or light mode. No configuration needed - it just works!
+
+If you prefer a fixed theme, use `theme=light` or `theme=dark` for explicit control.
 
 ### Custom Colors
 
@@ -181,7 +192,7 @@ yarn install
 yarn dev
 
 # Run tests
-yarn core:test
+yarn test
 
 # Lint
 yarn lint

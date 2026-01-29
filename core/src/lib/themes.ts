@@ -2,6 +2,7 @@ import type { Theme } from "../types/index.ts";
 
 export const themeNames = [
 	"github",
+	"light",
 	"dark",
 	"radical",
 	"tokyonight",
@@ -15,7 +16,14 @@ export const themeNames = [
 
 export type ThemeName = (typeof themeNames)[number];
 
-export const themes: Record<ThemeName, Theme> = {
+export const themes: Record<Exclude<ThemeName, "github">, Theme> = {
+	light: {
+		bg: "#ffffff",
+		title: "#0969da",
+		text: "#1f2328",
+		icon: "#0969da",
+		border: "#d0d7de",
+	},
 	dark: {
 		bg: "#0d1117",
 		title: "#58a6ff",
@@ -72,13 +80,6 @@ export const themes: Record<ThemeName, Theme> = {
 		icon: "#e06c75",
 		border: "#4b5263",
 	},
-	github: {
-		bg: "#ffffff",
-		title: "#0969da",
-		text: "#1f2328",
-		icon: "#0969da",
-		border: "#d0d7de",
-	},
 	monokai: {
 		bg: "#272822",
 		title: "#f92672",
@@ -88,7 +89,22 @@ export const themes: Record<ThemeName, Theme> = {
 	},
 };
 
+export function isAutoTheme(theme?: ThemeName): boolean {
+	return !theme || theme === "github";
+}
+
+export const CSS_VAR_THEME: Theme = {
+	bg: "var(--ers-bg)",
+	title: "var(--ers-title)",
+	text: "var(--ers-text)",
+	icon: "var(--ers-icon)",
+	border: "var(--ers-border)",
+};
+
 export function getTheme(name: ThemeName): Theme {
+	if (name === "github") {
+		return themes.light;
+	}
 	return themes[name];
 }
 
@@ -122,4 +138,43 @@ export function resolveTheme(
 			? normalizeHex(custom.border_color)
 			: base.border,
 	};
+}
+
+export function generateThemeStyles(
+	themeName: ThemeName = "github",
+	custom?: CustomColors,
+): string {
+	if (isAutoTheme(themeName)) {
+		const dark = themes.dark;
+		const light = themes.light;
+		return `
+		:root {
+			--ers-bg: ${custom?.bg_color ? normalizeHex(custom.bg_color) : dark.bg};
+			--ers-title: ${custom?.title_color ? normalizeHex(custom.title_color) : dark.title};
+			--ers-text: ${custom?.text_color ? normalizeHex(custom.text_color) : dark.text};
+			--ers-icon: ${custom?.icon_color ? normalizeHex(custom.icon_color) : dark.icon};
+			--ers-border: ${custom?.border_color ? normalizeHex(custom.border_color) : dark.border};
+		}
+		@media (prefers-color-scheme: light) {
+			:root {
+				--ers-bg: ${custom?.bg_color ? normalizeHex(custom.bg_color) : light.bg};
+				--ers-title: ${custom?.title_color ? normalizeHex(custom.title_color) : light.title};
+				--ers-text: ${custom?.text_color ? normalizeHex(custom.text_color) : light.text};
+				--ers-icon: ${custom?.icon_color ? normalizeHex(custom.icon_color) : light.icon};
+				--ers-border: ${custom?.border_color ? normalizeHex(custom.border_color) : light.border};
+			}
+		}
+	`;
+	}
+
+	const base = getTheme(themeName);
+	return `
+		:root {
+			--ers-bg: ${custom?.bg_color ? normalizeHex(custom.bg_color) : base.bg};
+			--ers-title: ${custom?.title_color ? normalizeHex(custom.title_color) : base.title};
+			--ers-text: ${custom?.text_color ? normalizeHex(custom.text_color) : base.text};
+			--ers-icon: ${custom?.icon_color ? normalizeHex(custom.icon_color) : base.icon};
+			--ers-border: ${custom?.border_color ? normalizeHex(custom.border_color) : base.border};
+		}
+	`;
 }

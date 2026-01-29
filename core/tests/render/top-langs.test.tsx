@@ -1,4 +1,7 @@
-import { themes } from "@edge-readme-stats/core/lib/themes";
+import {
+	CSS_VAR_THEME,
+	generateThemeStyles,
+} from "@edge-readme-stats/core/lib/themes";
 import { describe, expect, it } from "vitest";
 import { TopLangsCard } from "../../src/render/cards/langs";
 
@@ -15,10 +18,12 @@ describe("TopLangsCard", () => {
 			<TopLangsCard
 				username="testuser"
 				languages={mockLanguages}
-				theme={themes.github}
+				theme={CSS_VAR_THEME}
+				themeStyles={generateThemeStyles("light")}
 				hideBorder={false}
 				layout="compact"
 				langsCount={5}
+				locale="en"
 			/>
 		);
 		expect(svg.toString()).toMatchSnapshot();
@@ -29,10 +34,12 @@ describe("TopLangsCard", () => {
 			<TopLangsCard
 				username="testuser"
 				languages={mockLanguages}
-				theme={themes.github}
+				theme={CSS_VAR_THEME}
+				themeStyles={generateThemeStyles("light")}
 				hideBorder={false}
 				layout="compact"
 				langsCount={5}
+				locale="en"
 			/>
 		);
 		expect(svg.toString()).toMatchSnapshot();
@@ -43,10 +50,12 @@ describe("TopLangsCard", () => {
 			<TopLangsCard
 				username="testuser"
 				languages={mockLanguages}
-				theme={themes.github}
+				theme={CSS_VAR_THEME}
+				themeStyles={generateThemeStyles("light")}
 				hideBorder={false}
 				layout="compact"
 				langsCount={2}
+				locale="en"
 			/>
 		);
 		const output = svg.toString();

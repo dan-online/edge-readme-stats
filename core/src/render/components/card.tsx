@@ -4,6 +4,7 @@ import type { Theme } from "../../types/index.ts";
 interface CardProps {
 	title: string;
 	theme: Theme;
+	themeStyles: string;
 	width?: number;
 	height?: number;
 	hideBorder?: boolean;
@@ -29,6 +30,7 @@ const animationStyles = `
 export function Card({
 	title,
 	theme,
+	themeStyles,
 	width = 495,
 	height = 195,
 	hideBorder = false,
@@ -46,7 +48,10 @@ export function Card({
 			role="img"
 			aria-label={title}
 		>
-			{animate && <style>{animationStyles}</style>}
+			<style>
+				{themeStyles}
+				{animate && animationStyles}
+			</style>
 			<rect
 				x="0.5"
 				y="0.5"

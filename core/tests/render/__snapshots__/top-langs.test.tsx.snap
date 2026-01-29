@@ -2,6 +2,14 @@
 
 exports[`TopLangsCard > renders compact layout correctly 1`] = `
 "<svg width="400" height="120" viewBox="0 0 400 120" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Most Used Languages"><style>
+		:root {
+			--ers-bg: #ffffff;
+			--ers-title: #0969da;
+			--ers-text: #1f2328;
+			--ers-icon: #0969da;
+			--ers-border: #d0d7de;
+		}
+	
 	@keyframes fadeIn {
 		from { opacity: 0; }
 		to { opacity: 1; }
@@ -14,11 +22,19 @@ exports[`TopLangsCard > renders compact layout correctly 1`] = `
 	.animate-content { animation: fadeIn 0.5s ease-out forwards; animation-delay: 0.2s; opacity: 0; }
 	.animate-rank { animation: fadeIn 0.6s ease-out forwards; animation-delay: 0.3s; opacity: 0; }
 	.animate-rank-circle { animation: rankCircleSpin 1s ease-out forwards; animation-delay: 0.5s; }
-</style><rect x="0.5" y="0.5" width="399" height="119" rx="4.5" fill="#ffffff" class="animate-fade" stroke="#d0d7de" stroke-width="1"></rect><text x="25" y="35" font-family="&#39;Segoe UI&#39;, Ubuntu, Sans-Serif" font-size="18" font-weight="bold" fill="#0969da" class="animate-title">Most Used Languages</text><g transform="translate(25, 60)" class="animate-content"><g transform="translate(0, 0)"><rect width="350" height="8" rx="4" fill="#ddd"></rect><rect x="0" width="157.5" height="8" fill="#3178c6" rx="4"></rect><rect x="157.5" width="105" height="8" fill="#f1e05a" rx="0"></rect><rect x="262.5" width="52.5" height="8" fill="#3572A5" rx="0"></rect><rect x="315" width="35" height="8" fill="#dea584" rx="0"></rect></g><g transform="translate(0, 25)"><g transform="translate(0, 0)"><circle cx="5" cy="-4" r="5" fill="#3178c6"></circle><text x="15" y="0" font-family="&#39;Segoe UI&#39;, Ubuntu, Sans-Serif" font-size="11" fill="#1f2328">TypeScript 45.0%</text></g><g transform="translate(120, 0)"><circle cx="5" cy="-4" r="5" fill="#f1e05a"></circle><text x="15" y="0" font-family="&#39;Segoe UI&#39;, Ubuntu, Sans-Serif" font-size="11" fill="#1f2328">JavaScript 30.0%</text></g><g transform="translate(240, 0)"><circle cx="5" cy="-4" r="5" fill="#3572A5"></circle><text x="15" y="0" font-family="&#39;Segoe UI&#39;, Ubuntu, Sans-Serif" font-size="11" fill="#1f2328">Python 15.0%</text></g><g transform="translate(0, 20)"><circle cx="5" cy="-4" r="5" fill="#dea584"></circle><text x="15" y="0" font-family="&#39;Segoe UI&#39;, Ubuntu, Sans-Serif" font-size="11" fill="#1f2328">Rust 10.0%</text></g></g></g></svg>"
+</style><rect x="0.5" y="0.5" width="399" height="119" rx="4.5" fill="var(--ers-bg)" class="animate-fade" stroke="var(--ers-border)" stroke-width="1"></rect><text x="25" y="35" font-family="&#39;Segoe UI&#39;, Ubuntu, Sans-Serif" font-size="18" font-weight="bold" fill="var(--ers-title)" class="animate-title">Most Used Languages</text><g transform="translate(25, 60)" class="animate-content"><g transform="translate(0, 0)"><rect width="350" height="8" rx="4" fill="#ddd"></rect><rect x="0" width="157.5" height="8" fill="#3178c6" rx="4"></rect><rect x="157.5" width="105" height="8" fill="#f1e05a" rx="0"></rect><rect x="262.5" width="52.5" height="8" fill="#3572A5" rx="0"></rect><rect x="315" width="35" height="8" fill="#dea584" rx="0"></rect></g><g transform="translate(0, 25)"><g transform="translate(0, 0)"><circle cx="5" cy="-4" r="5" fill="#3178c6"></circle><text x="15" y="0" font-family="&#39;Segoe UI&#39;, Ubuntu, Sans-Serif" font-size="11" fill="var(--ers-text)">TypeScript 45.0%</text></g><g transform="translate(120, 0)"><circle cx="5" cy="-4" r="5" fill="#f1e05a"></circle><text x="15" y="0" font-family="&#39;Segoe UI&#39;, Ubuntu, Sans-Serif" font-size="11" fill="var(--ers-text)">JavaScript 30.0%</text></g><g transform="translate(240, 0)"><circle cx="5" cy="-4" r="5" fill="#3572A5"></circle><text x="15" y="0" font-family="&#39;Segoe UI&#39;, Ubuntu, Sans-Serif" font-size="11" fill="var(--ers-text)">Python 15.0%</text></g><g transform="translate(0, 20)"><circle cx="5" cy="-4" r="5" fill="#dea584"></circle><text x="15" y="0" font-family="&#39;Segoe UI&#39;, Ubuntu, Sans-Serif" font-size="11" fill="var(--ers-text)">Rust 10.0%</text></g></g></g></svg>"
 `;
 
 exports[`TopLangsCard > renders default layout correctly 1`] = `
 "<svg width="400" height="120" viewBox="0 0 400 120" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Most Used Languages"><style>
+		:root {
+			--ers-bg: #ffffff;
+			--ers-title: #0969da;
+			--ers-text: #1f2328;
+			--ers-icon: #0969da;
+			--ers-border: #d0d7de;
+		}
+	
 	@keyframes fadeIn {
 		from { opacity: 0; }
 		to { opacity: 1; }
@@ -31,5 +47,5 @@ exports[`TopLangsCard > renders default layout correctly 1`] = `
 	.animate-content { animation: fadeIn 0.5s ease-out forwards; animation-delay: 0.2s; opacity: 0; }
 	.animate-rank { animation: fadeIn 0.6s ease-out forwards; animation-delay: 0.3s; opacity: 0; }
 	.animate-rank-circle { animation: rankCircleSpin 1s ease-out forwards; animation-delay: 0.5s; }
-</style><rect x="0.5" y="0.5" width="399" height="119" rx="4.5" fill="#ffffff" class="animate-fade" stroke="#d0d7de" stroke-width="1"></rect><text x="25" y="35" font-family="&#39;Segoe UI&#39;, Ubuntu, Sans-Serif" font-size="18" font-weight="bold" fill="#0969da" class="animate-title">Most Used Languages</text><g transform="translate(25, 60)" class="animate-content"><g transform="translate(0, 0)"><rect width="350" height="8" rx="4" fill="#ddd"></rect><rect x="0" width="157.5" height="8" fill="#3178c6" rx="4"></rect><rect x="157.5" width="105" height="8" fill="#f1e05a" rx="0"></rect><rect x="262.5" width="52.5" height="8" fill="#3572A5" rx="0"></rect><rect x="315" width="35" height="8" fill="#dea584" rx="0"></rect></g><g transform="translate(0, 25)"><g transform="translate(0, 0)"><circle cx="5" cy="-4" r="5" fill="#3178c6"></circle><text x="15" y="0" font-family="&#39;Segoe UI&#39;, Ubuntu, Sans-Serif" font-size="11" fill="#1f2328">TypeScript 45.0%</text></g><g transform="translate(120, 0)"><circle cx="5" cy="-4" r="5" fill="#f1e05a"></circle><text x="15" y="0" font-family="&#39;Segoe UI&#39;, Ubuntu, Sans-Serif" font-size="11" fill="#1f2328">JavaScript 30.0%</text></g><g transform="translate(240, 0)"><circle cx="5" cy="-4" r="5" fill="#3572A5"></circle><text x="15" y="0" font-family="&#39;Segoe UI&#39;, Ubuntu, Sans-Serif" font-size="11" fill="#1f2328">Python 15.0%</text></g><g transform="translate(0, 20)"><circle cx="5" cy="-4" r="5" fill="#dea584"></circle><text x="15" y="0" font-family="&#39;Segoe UI&#39;, Ubuntu, Sans-Serif" font-size="11" fill="#1f2328">Rust 10.0%</text></g></g></g></svg>"
+</style><rect x="0.5" y="0.5" width="399" height="119" rx="4.5" fill="var(--ers-bg)" class="animate-fade" stroke="var(--ers-border)" stroke-width="1"></rect><text x="25" y="35" font-family="&#39;Segoe UI&#39;, Ubuntu, Sans-Serif" font-size="18" font-weight="bold" fill="var(--ers-title)" class="animate-title">Most Used Languages</text><g transform="translate(25, 60)" class="animate-content"><g transform="translate(0, 0)"><rect width="350" height="8" rx="4" fill="#ddd"></rect><rect x="0" width="157.5" height="8" fill="#3178c6" rx="4"></rect><rect x="157.5" width="105" height="8" fill="#f1e05a" rx="0"></rect><rect x="262.5" width="52.5" height="8" fill="#3572A5" rx="0"></rect><rect x="315" width="35" height="8" fill="#dea584" rx="0"></rect></g><g transform="translate(0, 25)"><g transform="translate(0, 0)"><circle cx="5" cy="-4" r="5" fill="#3178c6"></circle><text x="15" y="0" font-family="&#39;Segoe UI&#39;, Ubuntu, Sans-Serif" font-size="11" fill="var(--ers-text)">TypeScript 45.0%</text></g><g transform="translate(120, 0)"><circle cx="5" cy="-4" r="5" fill="#f1e05a"></circle><text x="15" y="0" font-family="&#39;Segoe UI&#39;, Ubuntu, Sans-Serif" font-size="11" fill="var(--ers-text)">JavaScript 30.0%</text></g><g transform="translate(240, 0)"><circle cx="5" cy="-4" r="5" fill="#3572A5"></circle><text x="15" y="0" font-family="&#39;Segoe UI&#39;, Ubuntu, Sans-Serif" font-size="11" fill="var(--ers-text)">Python 15.0%</text></g><g transform="translate(0, 20)"><circle cx="5" cy="-4" r="5" fill="#dea584"></circle><text x="15" y="0" font-family="&#39;Segoe UI&#39;, Ubuntu, Sans-Serif" font-size="11" fill="var(--ers-text)">Rust 10.0%</text></g></g></g></svg>"
 `;

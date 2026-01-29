@@ -1,18 +1,22 @@
+import { generateThemeStyles } from "@edge-readme-stats/core/lib/themes";
 import { Card } from "@edge-readme-stats/core/render/components/card";
 import { describe, expect, it } from "vitest";
+
+const testTheme = {
+	bg: "#fff",
+	title: "#000",
+	text: "#333",
+	icon: "#666",
+	border: "#ccc",
+};
 
 describe("Card component", () => {
 	it("renders with default dimensions", () => {
 		const svg = (
 			<Card
 				title="Test Card"
-				theme={{
-					bg: "#fff",
-					title: "#000",
-					text: "#333",
-					icon: "#666",
-					border: "#ccc",
-				}}
+				theme={testTheme}
+				themeStyles={generateThemeStyles()}
 			>
 				<text>Content</text>
 			</Card>
@@ -25,13 +29,8 @@ describe("Card component", () => {
 		const svg = (
 			<Card
 				title="Test"
-				theme={{
-					bg: "#fff",
-					title: "#000",
-					text: "#333",
-					icon: "#666",
-					border: "#ccc",
-				}}
+				theme={testTheme}
+				themeStyles={generateThemeStyles()}
 				hideBorder
 			>
 				<text>Content</text>
@@ -44,13 +43,8 @@ describe("Card component", () => {
 		const svg = (
 			<Card
 				title="Test"
-				theme={{
-					bg: "#fff",
-					title: "#000",
-					text: "#333",
-					icon: "#666",
-					border: "#ccc",
-				}}
+				theme={testTheme}
+				themeStyles={generateThemeStyles()}
 				width={300}
 				height={200}
 			>

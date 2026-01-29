@@ -7,7 +7,7 @@ import type { AppConfig } from "../lib/config.ts";
 import type { GitHubClient } from "../lib/github.ts";
 import { GitHubError } from "../lib/github.ts";
 import { resolveLocale, t } from "../lib/i18n.ts";
-import { resolveTheme } from "../lib/themes.ts";
+import { CSS_VAR_THEME, generateThemeStyles } from "../lib/themes.ts";
 import { TopLangsCard } from "../render/cards/langs.tsx";
 import { Card } from "../render/components/card.tsx";
 import type { LanguageStats } from "../types/index.ts";
@@ -57,15 +57,20 @@ export function createTopLangsRoute(
 			const i18n = t(locale);
 
 			if (!config.isUsernameAllowed(username)) {
-				const errorTheme = resolveTheme();
 				const errorSvg = (
-					<Card title="Error" theme={errorTheme} width={350} height={100}>
+					<Card
+						title="Error"
+						theme={CSS_VAR_THEME}
+						themeStyles={generateThemeStyles()}
+						width={350}
+						height={100}
+					>
 						<text
 							x="0"
 							y="20"
 							font-family="'Segoe UI', Ubuntu, Sans-Serif"
 							font-size="14"
-							fill={errorTheme.text}
+							fill={CSS_VAR_THEME.text}
 						>
 							{i18n.errors.usernameNotAllowed}
 						</text>
@@ -85,13 +90,13 @@ export function createTopLangsRoute(
 					await cache?.set(cacheKey, languages);
 				}
 
-				const theme = resolveTheme(query.theme, {
+				const customColors = {
 					bg_color: query.bg_color,
 					title_color: query.title_color,
 					text_color: query.text_color,
 					icon_color: query.icon_color,
 					border_color: query.border_color,
-				});
+				};
 
 				const langsCount = Math.min(Number(query.langs_count) || 5, 10);
 
@@ -99,7 +104,8 @@ export function createTopLangsRoute(
 					<TopLangsCard
 						username={username}
 						languages={languages}
-						theme={theme}
+						theme={CSS_VAR_THEME}
+						themeStyles={generateThemeStyles(query.theme, customColors)}
 						hideBorder={query.hide_border}
 						layout={query.layout ?? "compact"}
 						langsCount={langsCount}
@@ -115,15 +121,20 @@ export function createTopLangsRoute(
 			} catch (error) {
 				if (error instanceof GitHubError) {
 					const isNotFound = error.errors.some((e) => e.type === "NOT_FOUND");
-					const errorTheme = resolveTheme();
 					const errorSvg = (
-						<Card title="Error" theme={errorTheme} width={350} height={100}>
+						<Card
+							title="Error"
+							theme={CSS_VAR_THEME}
+							themeStyles={generateThemeStyles()}
+							width={350}
+							height={100}
+						>
 							<text
 								x="0"
 								y="20"
 								font-family="'Segoe UI', Ubuntu, Sans-Serif"
 								font-size="14"
-								fill={errorTheme.text}
+								fill={CSS_VAR_THEME.text}
 							>
 								{isNotFound
 									? i18n.errors.userNotFound

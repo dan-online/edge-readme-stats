@@ -1,4 +1,7 @@
-import { themes } from "@edge-readme-stats/core/lib/themes";
+import {
+	CSS_VAR_THEME,
+	generateThemeStyles,
+} from "@edge-readme-stats/core/lib/themes";
 import { StatsCard } from "@edge-readme-stats/core/render/cards/stats";
 import { describe, expect, it } from "vitest";
 
@@ -18,11 +21,13 @@ describe("StatsCard", () => {
 			<StatsCard
 				username="testuser"
 				stats={mockStats}
-				theme={themes.github}
+				theme={CSS_VAR_THEME}
+				themeStyles={generateThemeStyles("light")}
 				showIcons={true}
 				hideRank={false}
 				hideBorder={false}
 				hide={[]}
+				locale="en"
 			/>
 		);
 		expect(svg.toString()).toMatchSnapshot();
@@ -33,11 +38,13 @@ describe("StatsCard", () => {
 			<StatsCard
 				username="testuser"
 				stats={mockStats}
-				theme={themes.github}
+				theme={CSS_VAR_THEME}
+				themeStyles={generateThemeStyles("light")}
 				showIcons={true}
 				hideRank={true}
 				hideBorder={false}
 				hide={[]}
+				locale="en"
 			/>
 		);
 		expect(svg.toString()).not.toContain("A+");
@@ -48,16 +55,18 @@ describe("StatsCard", () => {
 			<StatsCard
 				username="testuser"
 				stats={mockStats}
-				theme={themes.github}
+				theme={CSS_VAR_THEME}
+				themeStyles={generateThemeStyles("light")}
 				showIcons={true}
 				hideRank={false}
 				hideBorder={false}
 				hide={["stars", "commits"]}
+				locale="en"
 			/>
 		);
 		const output = svg.toString();
-		expect(output).not.toContain("Total Stars");
-		expect(output).not.toContain("Total Commits");
-		expect(output).toContain("Total PRs");
+		expect(output).not.toContain("Stars:");
+		expect(output).not.toContain("Commits:");
+		expect(output).toContain("PRs:");
 	});
 });

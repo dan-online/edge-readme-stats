@@ -1,4 +1,3 @@
-import type { Locale } from "../../lib/i18n.ts";
 import { t } from "../../lib/i18n.ts";
 import type { StatsCardOptions } from "../../types/index.ts";
 import { Card } from "../components/card.tsx";
@@ -9,6 +8,7 @@ export function StatsCard({
 	username,
 	stats,
 	theme,
+	themeStyles,
 	showIcons,
 	hideRank,
 	hideBorder,
@@ -53,6 +53,7 @@ export function StatsCard({
 		<Card
 			title={i18n.title(username)}
 			theme={theme}
+			themeStyles={themeStyles}
 			width={cardWidth}
 			height={195}
 			hideBorder={hideBorder}

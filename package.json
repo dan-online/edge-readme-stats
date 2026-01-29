@@ -12,7 +12,7 @@
 		"dev": "yarn workspace @edge-readme-stats/node dev",
 		"build": "yarn workspaces foreach -A run build",
 		"core": "yarn workspace @edge-readme-stats/core",
-		"core:test": "yarn core test:run",
+		"test": "yarn core test:run",
 		"lint": "biome check",
 		"lint:fix": "biome check --fix",
 		"typecheck": "tsc --noEmit"

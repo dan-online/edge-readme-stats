@@ -40,6 +40,7 @@ export interface StatsCardOptions {
 	username: string;
 	stats: UserStats;
 	theme: Theme;
+	themeStyles: string;
 	showIcons: boolean;
 	hideRank: boolean;
 	hideBorder: boolean;
@@ -52,6 +53,7 @@ export interface TopLangsCardOptions {
 	username: string;
 	languages: LanguageStats[];
 	theme: Theme;
+	themeStyles: string;
 	hideBorder: boolean;
 	layout: "compact" | "donut";
 	langsCount: number;
