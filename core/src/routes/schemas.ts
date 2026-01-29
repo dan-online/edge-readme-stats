@@ -2,9 +2,6 @@ import * as v from "valibot";
 import { themeNames } from "../lib/themes.ts";
 import { coerceBoolean } from "../types/index.ts";
 
-/**
- * Base query schema with common fields shared across all card routes
- */
 export const BaseQuerySchema = v.object({
 	username: v.string(),
 	lang: v.optional(v.string()),

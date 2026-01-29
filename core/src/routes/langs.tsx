@@ -92,7 +92,7 @@ export function createTopLangsRoute(
 						layout={query.layout ?? "compact"}
 						langsCount={langsCount}
 						locale={locale}
-						animate={query.disable_animations}
+						animate={!query.disable_animations}
 					/>
 				);
 

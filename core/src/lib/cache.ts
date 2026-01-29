@@ -96,7 +96,6 @@ export class MemoryCache<T = unknown> {
 	}
 }
 
-/** Global cache instances */
 const caches: Record<string, MemoryCache<unknown>> = {};
 
 export function getCache<T>(

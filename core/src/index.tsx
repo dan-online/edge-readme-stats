@@ -7,6 +7,7 @@ import { createGeneratorRoute } from "./routes/generator.tsx";
 import { createTopLangsRoute } from "./routes/langs.tsx";
 import { createStatsRoute } from "./routes/stats.tsx";
 import type { LanguageStats, UserStats } from "./types/index.ts";
+import pkg from "../package.json" with { type: "json" };
 
 export { clearAllCaches, MemoryCache } from "./lib/cache.ts";
 export type { AppConfigVariables as AppConfigOptions } from "./lib/config.ts";
@@ -31,22 +32,8 @@ export function createApp(config: AppConfig) {
 			)
 		: null;
 
-	app.get("/health", (c) =>
-		c.json({
-			status: "ok",
-			cache: config.variables.cache.enabled
-				? {
-						enabled: true,
-						ttl: config.variables.cache.ttl,
-						statsEntries: statsCache?.size ?? 0,
-						langsEntries: langsCache?.size ?? 0,
-					}
-				: { enabled: false },
-			whitelist:
-				config.variables.whitelist.usernames.size > 0
-					? { enabled: true, count: config.variables.whitelist.usernames.size }
-					: { enabled: false },
-		}),
+	app.get("/", (c) =>
+		c.json({ repo: "dan-online/edge-readme-stats", version: pkg.version }),
 	);
 
 	app.route("/stats", createStatsRoute(client, config, statsCache));
@@ -59,7 +46,7 @@ export function createApp(config: AppConfig) {
 			documentation: {
 				info: {
 					title: "edge-readme-stats",
-					version: "0.1.0",
+					version: pkg.version,
 					description: "Fast, edge-native GitHub stats cards for your README",
 				},
 			},

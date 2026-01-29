@@ -1,7 +1,7 @@
-import { type GitHubClient, gql } from "../lib/github.ts";
+import type { GitHubClient } from "../lib/github.ts";
 import type { UserStats } from "../types/index.ts";
 
-const STATS_QUERY = gql`
+const STATS_QUERY = `
 query userStats($username: String!, $after: String) {
   user(login: $username) {
     login

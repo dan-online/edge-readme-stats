@@ -1,7 +1,7 @@
-import { type GitHubClient, gql } from "../lib/github.ts";
+import type { GitHubClient } from "../lib/github.ts";
 import type { LanguageStats } from "../types/index.ts";
 
-const LANGS_QUERY = gql`
+const LANGS_QUERY = `
 query userLanguages($username: String!) {
   user(login: $username) {
     repositories(first: 100, ownerAffiliations: OWNER, isFork: false) {
