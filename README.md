@@ -32,18 +32,32 @@ Or use these URLs directly:
 ![Top Languages](https://edge-readme-stats.dancodes.workers.dev/langs?username=YOUR_USERNAME)
 ```
 
-### Self-host with Docker
+### Self-Hosting
+
+#### Environment Variables
+
+| Variable | Required | Description |
+|----------|----------|-------------|
+| `GITHUB_TOKEN` | Recommended | GitHub PAT for higher rate limits |
+| `PORT` | No | Server port (default: 3000) |
+
+#### Docker
 
 ```bash
-docker run -p 3000:3000 -e GITHUB_TOKEN=ghp_xxx ghcr.io/dan-online/edge-readme-stats
+docker run -p 3000:3000 \
+  -e GITHUB_TOKEN=ghp_your_token \
+  ghcr.io/dan-online/edge-readme-stats
 ```
 
-### Deploy to Cloudflare Workers
+#### Cloudflare Workers
 
-```bash
-cd entries/worker
-npx wrangler deploy
-```
+1. Clone the repo
+2. Set secrets: `npx wrangler secret put GITHUB_TOKEN`
+3. Deploy: `npx wrangler deploy`
+
+#### Vercel
+
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/dan-online/edge-readme-stats)
 
 ## Cards
 
@@ -138,33 +152,6 @@ The language is also auto-detected from your browser's `Accept-Language` header.
 
 **Want to contribute translations?** We'd love help improving machine-translated locales or adding new languages. Edit [`core/src/lib/i18n.ts`](core/src/lib/i18n.ts) and submit a PR!
 
-## Self-Hosting
-
-### Environment Variables
-
-| Variable | Required | Description |
-|----------|----------|-------------|
-| `GITHUB_TOKEN` | Recommended | GitHub PAT for higher rate limits |
-| `PORT` | No | Server port (default: 3000) |
-
-### Docker
-
-```bash
-docker run -p 3000:3000 \
-  -e GITHUB_TOKEN=ghp_your_token \ # (optional)
-  ghcr.io/dan-online/edge-readme-stats
-```
-
-### Cloudflare Workers
-
-1. Clone the repo
-2. Set secrets: `yarn wrangler secret put GITHUB_TOKEN` (optional) 
-3. Deploy: `yarn wrangler deploy`
-
-### Vercel
-
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/dan-online/edge-readme-stats)
-
 ## Development
 
 ```bash
@@ -183,7 +170,26 @@ yarn lint
 
 ## API Documentation
 
-OpenAPI spec available at `/openapi`, Swagger UI at `/docs` when running the server.
+| Endpoint | Description |
+|----------|-------------|
+| `GET /` | Returns version and repo info |
+| `GET /stats` | Generate stats card SVG |
+| `GET /langs` | Generate languages card SVG |
+| `GET /generator` | Interactive card builder UI |
+| `GET /docs` | Swagger UI |
+| `GET /openapi` | OpenAPI spec (JSON) |
+
+## Why edge-readme-stats?
+
+The original [github-readme-stats](https://github.com/anuraghazra/github-readme-stats) by Anurag Hazra is a great project that inspired this one. It just didn't quite suit my needs, so I built this alternative with a focus on:
+
+- **Edge deployment** - Native support for Cloudflare Workers, Deno Deploy, and other edge runtimes
+- **Multi-platform** - Run on Vercel, Cloudflare, Deno, Bun, Node.js, or Docker
+- **TypeScript** - Full type safety with Valibot schema validation
+- **Modern tooling** - Hono framework, JSX/TSX for SVG templating
+- **Easy self-hosting** - Docker support and simple environment config
+
+If the original works well for you, use it! This is just an alternative for those who want edge deployment or different tech choices.
 
 ## Attribution
 

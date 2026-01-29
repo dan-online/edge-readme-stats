@@ -8,10 +8,6 @@ export class GitHubError extends Error {
 	}
 }
 
-export function gql(strings: TemplateStringsArray, ..._exprs: unknown[]) {
-	return strings.join("");
-}
-
 export function createGitHubClient(token?: string) {
 	const client = ky.create({
 		prefixUrl: "https://api.github.com",

@@ -51,7 +51,7 @@ async function startServer(
 
 function runWrk(): BenchResult {
 	const output = execSync(
-		`wrk -t${THREADS} -c${CONNECTIONS} -d${DURATION}s --latency http://localhost:${PORT}/health`,
+		`wrk -t${THREADS} -c${CONNECTIONS} -d${DURATION}s --latency http://localhost:${PORT}/`,
 		{ encoding: "utf-8" },
 	);
 

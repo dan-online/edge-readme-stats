@@ -503,22 +503,25 @@ export function createGeneratorRoute() {
 								border: border ? "#" + border : baseTheme.border,
 							};
 
-							const tick = String.fromCharCode(96);
-							const nl = String.fromCharCode(10);
-							const previewParams = new URLSearchParams();
-							previewParams.set("username", "dan-online");
-							previewParams.set("bg_color", themeObj.bg.slice(1));
-							previewParams.set("title_color", themeObj.title.slice(1));
-							previewParams.set("text_color", themeObj.text.slice(1));
-							previewParams.set("icon_color", themeObj.icon.slice(1));
-							previewParams.set("border_color", themeObj.border.slice(1));
-							const previewUrl = "https://edge-readme-stats.dancodes.workers.dev/stats?" + previewParams.toString();
-							const body = "## New Theme: " + themeName + nl + nl +
-								tick + tick + tick + "ts" + nl +
-								themeName + ": " + JSON.stringify(themeObj, null, "\t") + "," + nl +
-								tick + tick + tick + nl + nl +
-								"### Preview" + nl +
-								"![Preview](" + previewUrl + ")";
+							const previewParams = new URLSearchParams({
+								username: "dan-online",
+								bg_color: themeObj.bg.slice(1),
+								title_color: themeObj.title.slice(1),
+								text_color: themeObj.text.slice(1),
+								icon_color: themeObj.icon.slice(1),
+								border_color: themeObj.border.slice(1),
+							});
+							const previewUrl = "https://edge-readme-stats.dancodes.workers.dev/stats?" + previewParams;
+							const body = [
+								"## New Theme: " + themeName,
+								"",
+								"\`\`\`ts",
+								themeName + ": " + JSON.stringify(themeObj, null, "\\t") + ",",
+								"\`\`\`",
+								"",
+								"### Preview",
+								"![Preview](" + previewUrl + ")",
+							].join("\\n");
 
 							const issueUrl = "https://github.com/dan-online/edge-readme-stats/issues/new?" +
 								"title=" + encodeURIComponent("feat(theme): add custom theme " + themeName) +
