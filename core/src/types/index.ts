@@ -44,7 +44,7 @@ export interface StatsCardOptions {
 	hideRank: boolean;
 	hideBorder: boolean;
 	hide: string[];
-	locale?: string;
+	locale: Locale;
 	animate?: boolean;
 }
 
@@ -55,7 +55,7 @@ export interface TopLangsCardOptions {
 	hideBorder: boolean;
 	layout: "compact" | "donut";
 	langsCount: number;
-	locale?: Locale;
+	locale: Locale;
 	animate?: boolean;
 }
 

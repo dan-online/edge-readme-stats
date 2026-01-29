@@ -1,13 +1,13 @@
 import { swaggerUI } from "@hono/swagger-ui";
 import { Hono } from "hono";
 import { openAPIRouteHandler } from "hono-openapi";
+import pkg from "../package.json" with { type: "json" };
 import type { AppConfig } from "./lib/config.ts";
 import { createGitHubClient } from "./lib/github.ts";
 import { createGeneratorRoute } from "./routes/generator.tsx";
 import { createTopLangsRoute } from "./routes/langs.tsx";
 import { createStatsRoute } from "./routes/stats.tsx";
 import type { LanguageStats, UserStats } from "./types/index.ts";
-import pkg from "../package.json" with { type: "json" };
 
 export { clearAllCaches, MemoryCache } from "./lib/cache.ts";
 export type { AppConfigVariables as AppConfigOptions } from "./lib/config.ts";

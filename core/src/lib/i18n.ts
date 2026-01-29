@@ -82,7 +82,7 @@ export const translations = {
 
 export type Locale = keyof typeof translations;
 
-const locales = Object.keys(translations) as Locale[];
+export const locales = Object.keys(translations) as Locale[];
 
 export function t(locale: Locale = "en") {
 	return translations[locale];

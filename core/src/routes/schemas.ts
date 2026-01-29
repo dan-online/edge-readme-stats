@@ -1,10 +1,11 @@
 import * as v from "valibot";
 import { themeNames } from "../lib/themes.ts";
 import { coerceBoolean } from "../types/index.ts";
+import { locales } from "../lib/i18n.ts";
 
 export const BaseQuerySchema = v.object({
 	username: v.string(),
-	lang: v.optional(v.string()),
+	lang: v.fallback(v.picklist(locales), "en"),
 	theme: v.fallback(v.picklist(themeNames), themeNames[0]),
 	hide: v.fallback(
 		v.pipe(

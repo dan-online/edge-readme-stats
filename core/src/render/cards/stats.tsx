@@ -13,10 +13,10 @@ export function StatsCard({
 	hideRank,
 	hideBorder,
 	hide,
-	locale = "en",
+	locale,
 	animate = true,
 }: StatsCardOptions) {
-	const i18n = t(locale as Locale).stats;
+	const i18n = t(locale).stats;
 	const hideSet = new Set(hide);
 
 	const statRows = [

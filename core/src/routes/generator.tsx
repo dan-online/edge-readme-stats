@@ -78,8 +78,8 @@ export function createGeneratorRoute() {
 					theme={theme}
 					hideBorder={query.hide_border}
 					layout={query.layout}
-					langsCount={parseInt(query.langs_count || "5", 10)}
-					locale={(query.lang as Locale) || "en"}
+					langsCount={query.langs_count}
+					locale={query.lang}
 					animate={false}
 				/>
 			).toString();
@@ -94,7 +94,7 @@ export function createGeneratorRoute() {
 					hideRank={query.hide_rank}
 					hideBorder={query.hide_border}
 					hide={query.hide}
-					locale={(query.lang as Locale) || "en"}
+					locale={query.lang}
 					animate={false}
 				/>
 			).toString();
