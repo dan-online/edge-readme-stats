@@ -10,6 +10,6 @@
 		"@edge-readme-stats/core": "workspace:^"
 	},
 	"devDependencies": {
-		"wrangler": "^4.63.0"
+		"wrangler": "^4.65.0"
 	}
 }
