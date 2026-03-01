@@ -5,8 +5,8 @@
 		"@edge-readme-stats/core": "workspace:^"
 	},
 	"devDependencies": {
-		"@types/node": "^25.3.0",
+		"@types/node": "^25.3.3",
 		"typescript": "^5.9.3",
-		"vercel": "^50.22.1"
+		"vercel": "^50.25.4"
 	}
 }
