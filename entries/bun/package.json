@@ -2,7 +2,7 @@
 	"name": "@edge-readme-stats/bun",
 	"private": true,
 	"devDependencies": {
-		"@types/bun": "^1.3.12"
+		"@types/bun": "^1.3.13"
 	},
 	"dependencies": {
 		"@edge-readme-stats/core": "workspace:^"
