@@ -203,7 +203,7 @@ __metadata:
   resolution: "@edge-readme-stats/node@workspace:entries/node"
   dependencies:
     "@edge-readme-stats/core": "workspace:^"
-    "@hono/node-server": "npm:^1.19.9"
+    "@hono/node-server": "npm:^2.0.0"
     tsx: "npm:^4.21.0"
     vite: "npm:^8.0.10"
   languageName: unknown
@@ -875,12 +875,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@hono/node-server@npm:^1.19.9":
-  version: 1.19.9
-  resolution: "@hono/node-server@npm:1.19.9"
+"@hono/node-server@npm:^2.0.0":
+  version: 2.0.0
+  resolution: "@hono/node-server@npm:2.0.0"
   peerDependencies:
     hono: ^4
-  checksum: 10c0/de18c06b6b266dc45fe55fb82053bd1da8fe84939c49b6fbab4d2448b679d54ab5affbf8b15de9bead26f29b1755284d770aafb5ad14a8e4b3cfb4f79334554e
+  checksum: 10c0/bc4b2ca237b29deff442a158e8fedafa0c05945e87600b05fe47226d32e55a4b194c25c934cc1af4658fb8c04a7cae2030295bba0f84de216559706d69945ad9
   languageName: node
   linkType: hard
 
