@@ -21,7 +21,7 @@
 		"@hono/valibot-validator": "npm:@hono/valibot-validator@^0.6.1",
 		"@valibot/to-json-schema": "npm:@valibot/to-json-schema@^1.5.0",
 		"@hono/swagger-ui": "npm:@hono/swagger-ui@^0.6.0",
-		"@hono/standard-validator": "npm:@hono/standard-validator@^0.3.0",
+		"@hono/standard-validator": "npm:@hono/standard-validator@^0.4.0",
 		"@standard-community/standard-json": "npm:@standard-community/standard-json@^0.3.5",
 		"@standard-community/standard-openapi": "npm:@standard-community/standard-openapi@^0.2.9",
 		"@standard-schema/spec": "npm:@standard-schema/spec@^1.1.0",

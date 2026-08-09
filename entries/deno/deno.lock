@@ -1,7 +1,7 @@
 {
   "version": "5",
   "specifiers": {
-    "npm:@hono/standard-validator@0.3": "0.3.0_@standard-schema+spec@1.1.0_hono@4.11.5",
+    "npm:@hono/standard-validator@0.4": "0.4.0_@standard-schema+spec@1.1.0_hono@4.11.5",
     "npm:@hono/swagger-ui@0.6": "0.6.1_hono@4.11.5",
     "npm:@hono/valibot-validator@~0.6.1": "0.6.1_hono@4.11.5_valibot@1.2.0",
     "npm:@standard-community/standard-json@~0.3.5": "0.3.5_@standard-schema+spec@1.1.0_@types+json-schema@7.0.15_@valibot+to-json-schema@1.5.0__valibot@1.2.0_quansync@0.2.11_valibot@1.2.0",
@@ -23,8 +23,8 @@
         "hono"
       ]
     },
-    "@hono/standard-validator@0.3.0_@standard-schema+spec@1.1.0_hono@4.11.5": {
-      "integrity": "sha512-tHLKEjKXDcHImj0XTFWW4Hr0ev+1G5GxnBZrGdpg/7NLy9s9meFPTSCOkw++ZzZKom3FjrMw2e0nFQpPPvwUVQ==",
+    "@hono/standard-validator@0.4.0_@standard-schema+spec@1.1.0_hono@4.11.5": {
+      "integrity": "sha512-MxOm1asDh9j7c1D0KiWwppSbFgAQxTRO4YEhjMrJn3lF1BIcXenPdgjSGKDRfQmZdaTaMA8slQLETgVOKyJxFw==",
       "dependencies": [
         "@standard-schema/spec",
         "hono"
@@ -117,7 +117,7 @@
   },
   "workspace": {
     "dependencies": [
-      "npm:@hono/standard-validator@0.3",
+      "npm:@hono/standard-validator@0.4",
       "npm:@hono/swagger-ui@0.6",
       "npm:@hono/valibot-validator@~0.6.1",
       "npm:@standard-community/standard-json@~0.3.5",
