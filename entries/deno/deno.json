@@ -14,7 +14,7 @@
 		"hono/jsx/jsx-runtime": "npm:hono@^4.11.5/jsx/jsx-runtime",
 		"hono/jsx/jsx-dev-runtime": "npm:hono@^4.11.5/jsx/jsx-dev-runtime",
 		"hono/jsx/streaming": "npm:hono@^4.11.5/jsx/streaming",
-		"ky": "npm:ky@^1.14.3",
+		"ky": "npm:ky@^2.0.0",
 		"valibot": "npm:valibot@^1.2.0",
 		"hono-openapi": "npm:hono-openapi@^1.2.0",
 		"hono-openapi/": "npm:hono-openapi@^1.2.0/",
