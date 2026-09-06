@@ -190,7 +190,7 @@ __metadata:
     "@valibot/to-json-schema": "npm:^1.5.0"
     hono: "npm:^4.11.6"
     hono-openapi: "npm:^1.2.0"
-    ky: "npm:^1.14.3"
+    ky: "npm:^2.1.0"
     openapi-types: "npm:^12.1.3"
     quansync: "npm:^1.0.0"
     valibot: "npm:^1.2.0"
@@ -4424,10 +4424,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ky@npm:^1.14.3":
-  version: 1.14.3
-  resolution: "ky@npm:1.14.3"
-  checksum: 10c0/8e91c9512c8f1501201108ad58ed437eaf3f5b0a0da842bd846d785932426e84a31cf51d0fffce1921d4e70e26465a9b2b89ed2477822975568258a1fa68a740
+"ky@npm:^2.1.0":
+  version: 2.1.0
+  resolution: "ky@npm:2.1.0"
+  checksum: 10c0/e2a6f0abe670cca97175890d649e0ffc01fbf1bf46c6cf49a5371db80c3bb8b86988a8bd8eb661d7893c3cebca85684458813979793e955cff5a3020372fd888
   languageName: node
   linkType: hard
 
