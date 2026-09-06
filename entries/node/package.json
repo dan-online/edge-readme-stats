@@ -12,7 +12,7 @@
 		"@hono/node-server": "^2.0.0"
 	},
 	"devDependencies": {
-		"tsx": "^4.23.12",
-		"vite": "^8.2.1"
+		"tsx": "^4.23.13",
+		"vite": "^8.2.2"
 	}
 }
