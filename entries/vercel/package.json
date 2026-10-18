@@ -7,6 +7,6 @@
 	"devDependencies": {
 		"@types/node": "^25.9.9",
 		"typescript": "^7.0.2",
-		"vercel": "^63.1.2"
+		"vercel": "^64.5.0"
 	}
 }
